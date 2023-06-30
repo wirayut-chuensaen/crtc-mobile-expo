@@ -1,7 +1,8 @@
 {
   "expo": {
-    "name": "crtc-mobile-expo",
-    "slug": "crtc-mobile-expo",
+    "name": "crtc-mobile",
+    "slug": "crtc-mobile",
+    "scheme": "crtc",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -24,8 +25,6 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": [
-      "@react-native-google-signin/google-signin"
-    ]
+    "plugins": ["@react-native-google-signin/google-signin"]
   }
 }
