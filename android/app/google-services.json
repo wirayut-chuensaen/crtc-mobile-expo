@@ -1,0 +1,78 @@
+{
+  "project_info": {
+    "project_number": "831856074930",
+    "project_id": "crtc-5b9b4",
+    "storage_bucket": "crtc-5b9b4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:831856074930:android:c9d15614e79ba7e5cda9ab",
+        "android_client_info": {
+          "package_name": "th.co.crtc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "831856074930-0fmres97fji2ueqgt4kv18a4llbd21k1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "th.co.crtc",
+            "certificate_hash": "fff90a2ab8600e36315030d8146595979f81488f"
+          }
+        },
+        {
+          "client_id": "831856074930-apj8bctt2u3g4mnig68s3gkg8c376bak.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "th.co.crtc",
+            "certificate_hash": "c223c2f47db6b194afc944fade9fa2b956ab5bfe"
+          }
+        },
+        {
+          "client_id": "831856074930-d42ihbhfljke1nds78605p7fe5m0b1hm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "th.co.crtc",
+            "certificate_hash": "141bf9abc5db7dffb5a64b6569ec735fcf51152f"
+          }
+        },
+        {
+          "client_id": "831856074930-h5gbfbr93i5jnu6sv7srl4n40dcu3afl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "th.co.crtc",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "831856074930-qef2s73g5v4k5jt8tnhte5570bp9n1n8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAFA8a3Dss1vDbTlUT58i-z3s-NihSrNWU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "831856074930-qef2s73g5v4k5jt8tnhte5570bp9n1n8.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "831856074930-24vd64gj35dlu68229qrfbgfhn4ohc3c.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "th.co.crtc"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

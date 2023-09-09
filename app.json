@@ -1,30 +1,84 @@
 {
   "expo": {
-    "name": "crtc-mobile",
-    "slug": "crtc-mobile",
+    "name": "CRTC",
+    "slug": "crtc",
     "scheme": "crtc",
-    "version": "1.0.0",
+    "version": "3.3.6",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/logo.png",
     "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+      "supportsTablet": false,
+      "bundleIdentifier": "th.co.crtc",
+      "googleServicesFile": "./GoogleService-Info.plist",
+      "buildNumber": "1",
+      "config": {},
+      "infoPlist": {
+        "NSCameraUsageDescription": "This app requires access to the camera.",
+        "NSLocationWhenInUseUsageDescription": "",
+        "NSMicrophoneUsageDescription": "Not use but required.",
+        "NSPhotoLibraryUsageDescription": "This app requires access to the photo library.",
+        "NSUserTrackingUsageDescription": "This identifier will be used to deliver personalized ads to you.",
+        "SKAdNetworkItems": [
+          {
+            "SKAdNetworkIdentifier": "v9wttpbfk9.skadnetwork"
+          },
+          {
+            "SKAdNetworkIdentifier": "n38lu8286q.skadnetwork"
+          }
+        ]
       }
     },
-    "web": {
-      "favicon": "./assets/favicon.png"
+    "android": {
+      "package": "th.co.crtc",
+      "googleServicesFile": "./google-services.json",
+      "versionCode": 48,
+      "permissions": [
+        "INTERNET",
+        "ACCESS_NETWORK_STATE",
+        "SYSTEM_ALERT_WINDOW",
+        "CAMERA",
+        "RECORD_AUDIO",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE",
+        "ACCESS_FINE_LOCATION",
+        "RECEIVE_BOOT_COMPLETED",
+        "VIBRATE",
+        "DOWNLOAD_WITHOUT_NOTIFICATION",
+        "MANAGE_DOCUMENTS",
+        ""
+      ],
+      "config": {}
     },
-    "plugins": ["@react-native-google-signin/google-signin"]
+    "plugins": [
+      "@react-native-google-signin/google-signin",
+      [
+        "react-native-fbsdk-next",
+        {
+          "appID": "362291751397040",
+          "clientToken": "85e0e47544cc86348ef17c8b496d5712",
+          "displayName": "CRTC",
+          "scheme": "fb48127127xxxxxxxx",
+          "advertiserIDCollectionEnabled": false,
+          "autoLogAppEventsEnabled": false,
+          "isAutoInitEnabled": false,
+          "iosUserTrackingPermission": "This identifier will be used to deliver personalized ads to you."
+        }
+      ],
+      [
+        "expo-tracking-transparency",
+        {
+          "userTrackingPermission": "This identifier will be used to deliver personalized ads to you."
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "39343dbb-66aa-4825-84ad-a2147beb9e6b"
+      }
+    }
   }
 }
