@@ -223,6 +223,32 @@ const VerifyPin = ({
 		}
 	};
 
+	const buildBackButton = () => {
+		// console.log("debug canGoBack : ", navigation?.canGoBack())
+		if (navigation?.canGoBack()) {
+			return (
+				<TouchableOpacity
+					onPress={onBack}
+					disabled={!canBack}
+					style={{
+						marginTop: 50,
+						marginLeft: 10,
+						alignItems: 'flex-start',
+						justifyContent: 'flex-start',
+					}}>
+					<Icon
+						name="chevron-thin-left"
+						type="entypo"
+						color={canBack ? '#fff' : 'transparent'}
+						size={30}
+					/>
+				</TouchableOpacity>
+			)
+		} else {
+			return (<View style={{ marginTop: 80 }} />)
+		}
+	}
+
 	return (
 		<AppView isLoading={isLoading} style={{ flex: 1 }}>
 			<Dialog isVisible={dialog?.status ? dialog?.status : false} onBackdropPress={handleCancel}>
@@ -241,22 +267,7 @@ const VerifyPin = ({
 				style={{ ...StyleSheet.absoluteFillObject }}
 			/>
 			<View style={{ zIndex: 9999, flex: 1 }}>
-				<TouchableOpacity
-					// onPress={onBack}
-					disabled={!canBack}
-					style={{
-						marginTop: 50,
-						marginLeft: 10,
-						alignItems: 'flex-start',
-						justifyContent: 'flex-start',
-					}}>
-					{/* <Icon
-              name="chevron-thin-left"
-              type="entypo"
-              color={canBack ? '#fff' : 'transparent'}
-              size={30}
-            /> */}
-				</TouchableOpacity>
+				{buildBackButton()}
 				<View style={{ justifyContent: 'center', alignItems: 'center' }}>
 					<View style={styles.numberPad}>
 						<Icon

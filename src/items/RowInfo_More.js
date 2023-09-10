@@ -1,43 +1,40 @@
-import React, {Component} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import Constant from '../util/Constant';
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import Constant from '../utils/Constant';
 
-export class RowInfo_More extends Component {
-  render() {
-    return (
-      <View
-        style={{flexDirection: 'column', paddingLeft: 10, paddingRight: 10}}>
-        <View style={styles.item_content}>
-          <Text style={{fontWeight: 'bold'}}>{this.props.keys}</Text>
-          <Text
-            style={{
-              flex: 1,
-              flexDirection: 'row',
-              textAlign: 'right',
-              color: this.props.color,
-            }}>
-            {this.props.name}
-          </Text>
-        </View>
-        <View style={{height: 1, backgroundColor: Constant.color.white}} />
-      </View>
-    );
-  }
+const RowInfo_More = ({ keys, name, color }) => {
+	return (
+		<View style={styles.container}>
+			<View style={styles.item_content}>
+				<Text style={{ fontWeight: 'bold' }}>{keys}</Text>
+				<Text
+					style={{
+						flex: 1,
+						flexDirection: 'row',
+						textAlign: 'right',
+						color: color,
+					}}>
+					{name}
+				</Text>
+			</View>
+			<View style={{ height: 1, backgroundColor: Constant?.color?.white }} />
+		</View>
+	);
 }
 
 export default RowInfo_More;
 
 const styles = StyleSheet.create({
-  item: {
-    flex: 1,
-  },
-  item_content: {
-    flexDirection: 'row',
-    padding: 10,
-  },
-  itemContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    textAlign: 'right',
-  },
+	container: {
+		flexDirection: 'column',
+		paddingLeft: 10,
+		paddingRight: 10
+	},
+	item: {
+		flex: 1,
+	},
+	item_content: {
+		flexDirection: 'row',
+		padding: 10,
+	},
 });

@@ -10,12 +10,14 @@ import VerifyPin from './page/VerifyPin';
 import Settings from './page/Settings';
 import ForgotPin from './page/ForgotPin';
 import NewPinOTP from './page/NewPinOTP';
+import Contact from "./details/Contact"
+import Notifications from './details/Notifications';
+import PrivacyPolicy from './details/PrivacyPolicy';
+import ChangePassword from './page/ChangePassword';
 
-// import PrivacyPolicy from '../detail/PrivacyPolicy';
-// import Notifications from '../detail/Notifications';
 // import News from '../page/News';
 // import NewsDetail from '../detail/NewsDetail';
-// import Contact from '../detail/Contact';
+
 
 // import Infomations from '../page/Infomations';
 // import Share from '../page/Share';
@@ -42,7 +44,7 @@ import NewPinOTP from './page/NewPinOTP';
 
 // import Dividend from '../page/Dividend';
 // import Dividend_Detail from '../detail/Dividend_Detail';
-// import ChangePassword from '../page/ChangePassword';
+
 
 // import AddAccount from '../page/AddAccount';
 // import AccountDetail from '../page/AccountDetail';
@@ -99,13 +101,13 @@ const Routes = () => {
 				<Stack.Screen name="Settings" component={Settings} />
 				<Stack.Screen name="ForgotPin" component={ForgotPin} />
 				<Stack.Screen name="NewPinOTP" component={NewPinOTP} />
+				<Stack.Screen name="Contact" component={Contact} />
+				<Stack.Screen name="Notifications" component={Notifications} />
+				<Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
+				<Stack.Screen name="ChangePassword" component={ChangePassword} />
 
 				{/*
-        <Stack.Screen name="Contact" component={Contact} />
-        <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
-        <Stack.Screen name="Notifications" component={Notifications} />
-        <Stack.Screen name="ChangePassword" component={ChangePassword} />
-
+        
         
         <Stack.Screen name="Infomations" component={Infomations} />
 

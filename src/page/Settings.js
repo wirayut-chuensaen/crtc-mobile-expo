@@ -26,13 +26,13 @@ const Settings = ({ navigation, Actions }) => {
             sub: 'ติดต่อเรา',
             action: 1,
         },
-        {
-            icon: 'notifications-outline',
-            type: 'ionicon',
-            name: 'Notification Setting',
-            sub: 'การแจ้งเตือน',
-            action: 2,
-        },
+        // {
+        //     icon: 'notifications-outline',
+        //     type: 'ionicon',
+        //     name: 'Notification Setting',
+        //     sub: 'การแจ้งเตือน',
+        //     action: 2,
+        // },
         {
             icon: 'Safety',
             type: 'antdesign',
@@ -55,6 +55,7 @@ const Settings = ({ navigation, Actions }) => {
             action: 5,
         },
     ])
+    const [isLoading, setIsLoading] = useState(false)
 
     const onHandleMenu = ({ item }) => {
         switch (item?.action) {
@@ -74,12 +75,13 @@ const Settings = ({ navigation, Actions }) => {
     };
 
     const pressLogout = async () => {
-        await AsyncStorage.clear();
+        setIsLoading(true)
+        await AsyncStorage.clear().then(() => setIsLoading(false));
         Actions.replace('Authen');
     };
 
     return (
-        <AppView>
+        <AppView isLoading={isLoading}>
             <Header
                 leftComponent={
                     <Icon

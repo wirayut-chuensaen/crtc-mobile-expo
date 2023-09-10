@@ -5,6 +5,7 @@ const showError = message =>
 		type: 'error',
 		text1: message || "เกิดข้อผิดพลาด",
 		text1NumberOfLines: 2,
+		onPress: () => Toast.hide(),
 	});
 
 export default showError;

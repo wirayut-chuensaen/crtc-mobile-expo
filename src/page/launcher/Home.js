@@ -210,6 +210,7 @@ const Home = ({ navigation, route, onLoadingChange }) => {
 			<Header onSetting={() => navigation.navigate('Settings')} />
 			<View style={styles.contentMenu}>
 				<FlatList
+					showsVerticalScrollIndicator={false}
 					data={menuList}
 					keyExtractor={(data, index) => `menu_${index}`}
 					ItemSeparatorComponent={() => <View style={{ height: 15 }} />}

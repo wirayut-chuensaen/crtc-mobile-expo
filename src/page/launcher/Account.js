@@ -22,6 +22,7 @@ const Account = ({ navigation, route }) => {
 	}, []);
 
 	const initialData = async () => {
+		setIsLoading(true)
 		try {
 			let hasCache = false;
 			const cacheAccountList = await DataPersistant.getItem(
@@ -32,13 +33,9 @@ const Account = ({ navigation, route }) => {
 				hasCache = true;
 				setAccountList(cacheAccountList);
 			}
-			if (!hasCache) {
-				setIsLoading(true);
-			}
-			account((res, done) => {
-				setIsLoading(false);
+			await account((res, done) => {
 				setRefreshing(false);
-				console.log({ res });
+				// console.log("account res : ", res);
 				if (done && res?.data?.status) {
 					const { accounts } = res?.data?.data;
 					const finalData = accounts.filter(x => !Array.isArray(x));
@@ -51,6 +48,8 @@ const Account = ({ navigation, route }) => {
 			});
 		} catch (e) {
 			console.log("Account.js initialData error : ", e)
+		} finally {
+			setIsLoading(false)
 		}
 	};
 

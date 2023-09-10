@@ -41,7 +41,7 @@ const getJson = async (path = '', body = {}, callback) => {
   }
 
   if (__DEV__) {
-    console.log('Get JSON', {
+    console.log(`Get JSON path : ${path}`, {
       path: Constant.urlApi + path,
       header,
     });
@@ -61,7 +61,7 @@ const postJson = async (path = '', body, callback) => {
   const header = await getHeader();
 
   if (__DEV__) {
-    console.log('Post JSON', {
+    console.log(`Post JSON path : ${path}`, {
       path: Constant.urlApi + path,
       body,
       header,
@@ -147,16 +147,16 @@ export const netbill = callback => getJson('/net-bill', {}, callback);
 export const cooperative_Detail = (id, callback) =>
   getJson('/net-bill-detail/' + id, {}, callback);
 
-export const cremation = (cremation_type, callback) => getJson('/cremation', {cremation_type}, callback);
+export const cremation = (cremation_type, callback) => getJson('/cremation', { cremation_type }, callback);
 export const cremationType = callback => getJson('/cremation-type', {}, callback);
 
 export const cremationDeduct = (cremation_type, callback) =>
-  getJson('/cremation-deduct', {cremation_type}, callback);
+  getJson('/cremation-deduct', { cremation_type }, callback);
 
 export const cremation_Detail = (billno, type, callback) =>
   getJson(`/cremation-detail/${billno}?cremation_type=${type}`, {}, callback);
 
-  export const cremationDeductDetail = (billno, type, callback) =>
+export const cremationDeductDetail = (billno, type, callback) =>
   getJson(`/cremation-deduct-detail/${billno}?cremation_type=${type}`, {}, callback);
 
 export const stock = callback => getJson('/stock', {}, callback);
@@ -204,9 +204,9 @@ export const canTransfer = (body, callback) =>
 
 export const smsDelay = callback => getJson('/sms_delay', {}, callback);
 
-export const cremationTop = (cremation_type, callback) => getJson('/cremation-top', {cremation_type}, callback);
+export const cremationTop = (cremation_type, callback) => getJson('/cremation-top', { cremation_type }, callback);
 
-export const beneficiary = (cremation_type, callback) => getJson('/beneficiary', {cremation_type}, callback);
+export const beneficiary = (cremation_type, callback) => getJson('/beneficiary', { cremation_type }, callback);
 
 export const requestNewPinOTP = callback =>
   postJson('/send-otp-change-pin', {}, callback);

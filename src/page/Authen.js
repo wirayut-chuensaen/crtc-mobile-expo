@@ -6,6 +6,7 @@ import {
 	TextInput,
 	View,
 	Image,
+	Keyboard,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Icon, Button, Dialog } from 'react-native-elements';
@@ -30,7 +31,7 @@ import {
 import * as Application from 'expo-application';
 import useNavigator from '../utils/useNavigator';
 import { Settings } from 'react-native-fbsdk-next';
-import { AppView, AppLoading, AppButton, Padding } from '../component';
+import { AppView, AppButton, Padding } from '../component';
 
 const Authen = ({ Actions }) => {
 	const [isLoading, setIsLoading] = useState(false)
@@ -68,6 +69,7 @@ const Authen = ({ Actions }) => {
 	};
 
 	const pressLogin = async () => {
+		Keyboard.dismiss()
 		try {
 			let body = {};
 			body.device_token = fcmToken
