@@ -83,30 +83,30 @@ import ChangePassword from './page/ChangePassword';
 const Stack = createNativeStackNavigator();
 
 const Routes = () => {
-	return (
-		<NavigationContainer
-			linking={{
-				prefixes: "crtc://"
-			}}
-		>
-			<Stack.Navigator
-				initialRouteName="CheckingLogin"
-				screenOptions={{ headerShown: false, gestureEnabled: false }}>
-				<Stack.Screen name='CheckingLogin' component={CheckingLogin} />
-				<Stack.Screen name="Authen" component={Authen} />
-				<Stack.Screen name="Verify" component={Verify} />
-				<Stack.Screen name="VerifyPin" component={VerifyPin} />
-				<Stack.Screen name="Launcher" component={Launcher} />
-				<Stack.Screen name="TermAndCondition" component={TermAndCondition} />
-				<Stack.Screen name="Settings" component={Settings} />
-				<Stack.Screen name="ForgotPin" component={ForgotPin} />
-				<Stack.Screen name="NewPinOTP" component={NewPinOTP} />
-				<Stack.Screen name="Contact" component={Contact} />
-				<Stack.Screen name="Notifications" component={Notifications} />
-				<Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
-				<Stack.Screen name="ChangePassword" component={ChangePassword} />
+  return (
+    <NavigationContainer
+      linking={{
+        prefixes: "crtc://"
+      }}
+    >
+      <Stack.Navigator
+        initialRouteName="CheckingLogin"
+        screenOptions={{ headerShown: false, gestureEnabled: false, animation: "default" }}>
+        <Stack.Screen name='CheckingLogin' component={CheckingLogin} />
+        <Stack.Screen name="Authen" component={Authen} />
+        <Stack.Screen name="Verify" component={Verify} />
+        <Stack.Screen name="VerifyPin" component={VerifyPin} />
+        <Stack.Screen name="Launcher" component={Launcher} />
+        <Stack.Screen name="TermAndCondition" component={TermAndCondition} />
+        <Stack.Screen name="Settings" component={Settings} />
+        <Stack.Screen name="ForgotPin" component={ForgotPin} />
+        <Stack.Screen name="NewPinOTP" component={NewPinOTP} />
+        <Stack.Screen name="Contact" component={Contact} />
+        <Stack.Screen name="Notifications" component={Notifications} />
+        <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
+        <Stack.Screen name="ChangePassword" component={ChangePassword} />
 
-				{/*
+        {/*
         
         
         <Stack.Screen name="Infomations" component={Infomations} />
@@ -131,7 +131,7 @@ const Routes = () => {
           component={Cooperative_Detail}
         /> */}
 
-				{/*<Stack.Screen name="Cremations" component={Cremations} />
+        {/*<Stack.Screen name="Cremations" component={Cremations} />
         <Stack.Screen name="Cremations" component={Cremation} />
         <Stack.Screen name="CremationsList" component={CremationsList} />
 
@@ -208,9 +208,9 @@ const Routes = () => {
         <Stack.Screen name="CoopAccountNotLink" component={CoopAccountNotLink} />
 
          */}
-			</Stack.Navigator>
-		</NavigationContainer>
-	);
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
 };
 
 export default Routes;

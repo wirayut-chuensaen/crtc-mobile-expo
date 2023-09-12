@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, TouchableOpacity, Platform} from 'react-native';
-import DocumentPicker from 'react-native-document-picker';
+// import DocumentPicker from 'react-native-document-picker';  // change to expo doc picker
 import Constant from '../util/Constant';
 
 const getFileResult = result => {

@@ -10,26 +10,20 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "updates": {
+      "url": "https://u.expo.dev/906d171b-9101-4954-b4a2-9ef1fb445007"
+    },
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "th.co.crtc",
       "googleServicesFile": "./GoogleService-Info.plist",
       "buildNumber": "1",
-      "config": {},
       "infoPlist": {
         "NSCameraUsageDescription": "This app requires access to the camera.",
         "NSLocationWhenInUseUsageDescription": "",
         "NSMicrophoneUsageDescription": "Not use but required.",
         "NSPhotoLibraryUsageDescription": "This app requires access to the photo library.",
-        "NSUserTrackingUsageDescription": "This identifier will be used to deliver personalized ads to you.",
-        "SKAdNetworkItems": [
-          {
-            "SKAdNetworkIdentifier": "v9wttpbfk9.skadnetwork"
-          },
-          {
-            "SKAdNetworkIdentifier": "n38lu8286q.skadnetwork"
-          }
-        ]
+        "NSUserTrackingUsageDescription": "This identifier will be used to deliver personalized ads to you."
       }
     },
     "android": {
@@ -48,26 +42,10 @@
         "RECEIVE_BOOT_COMPLETED",
         "VIBRATE",
         "DOWNLOAD_WITHOUT_NOTIFICATION",
-        "MANAGE_DOCUMENTS",
-        ""
-      ],
-      "config": {}
+        "MANAGE_DOCUMENTS"
+      ]
     },
     "plugins": [
-      "@react-native-google-signin/google-signin",
-      [
-        "react-native-fbsdk-next",
-        {
-          "appID": "362291751397040",
-          "clientToken": "85e0e47544cc86348ef17c8b496d5712",
-          "displayName": "CRTC",
-          "scheme": "fb48127127xxxxxxxx",
-          "advertiserIDCollectionEnabled": false,
-          "autoLogAppEventsEnabled": false,
-          "isAutoInitEnabled": false,
-          "iosUserTrackingPermission": "This identifier will be used to deliver personalized ads to you."
-        }
-      ],
       [
         "expo-tracking-transparency",
         {
@@ -77,8 +55,11 @@
     ],
     "extra": {
       "eas": {
-        "projectId": "39343dbb-66aa-4825-84ad-a2147beb9e6b"
+        "projectId": "906d171b-9101-4954-b4a2-9ef1fb445007"
       }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
     }
   }
 }

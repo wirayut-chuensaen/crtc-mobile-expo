@@ -88,7 +88,7 @@ const Account = ({ navigation, route }) => {
 				<TouchableOpacity onPress={toAddAccount}>
 					<LinearGradient
 						locations={[0, 0.4]}
-						colors={[Constant.color.violetlight, Constant.color.darkPurple]}
+						colors={[Constant?.color?.violetlight, Constant?.color?.darkPurple]}
 						start={{ x: 0, y: 0 }}
 						end={{ x: 1, y: 1 }}
 						style={{
@@ -127,10 +127,10 @@ const Account = ({ navigation, route }) => {
 		<AppView isLoading={isLoading} style={{ flex: 1, backgroundColor: '#efefef' }}>
 			<Header
 				centerComponent={{ text: 'บัญชีของฉัน', style: { color: '#fff' } }}
-				innerContainerStyles={{ backgroundColor: Constant.color.violet }}
+				innerContainerStyles={{ backgroundColor: Constant?.color?.violet }}
 				containerStyle={{
-					backgroundColor: Constant.color.violet,
-					borderBottomColor: Constant.color.violet,
+					backgroundColor: Constant?.color?.violet,
+					borderBottomColor: Constant?.color?.violet,
 				}}
 			/>
 			<FlatList

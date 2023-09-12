@@ -11,26 +11,25 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Icon, Button, Dialog } from 'react-native-elements';
 import Constant from '../utils/Constant';
-import {
-	AccessToken,
-	GraphRequest,
-	GraphRequestManager,
-	LoginManager,
-} from 'react-native-fbsdk-next';
-import { GoogleSignin, GoogleSigninButton, statusCodes } from '@react-native-google-signin/google-signin';
-import { FontAwesome } from "@expo/vector-icons"
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+// import {
+// 	AccessToken,
+// 	GraphRequest,
+// 	GraphRequestManager,
+// 	LoginManager,
+// 	Settings,
+// } from 'react-native-fbsdk-next';
+// import { GoogleSignin, GoogleSigninButton, statusCodes } from '@react-native-google-signin/google-signin';
+import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons"
 import Toast from 'react-native-toast-message'
-import firebase from '@react-native-firebase/app';
+// import firebase from '@react-native-firebase/app';
 import { authen, checkSocialVerify } from "../service/Services"
 import { LinearGradient } from "expo-linear-gradient"
-import {
-	appleAuth,
-	AppleButton,
-} from '@invertase/react-native-apple-authentication';
+// import {
+// 	appleAuth,
+// 	AppleButton,
+// } from '@invertase/react-native-apple-authentication';
 import * as Application from 'expo-application';
 import useNavigator from '../utils/useNavigator';
-import { Settings } from 'react-native-fbsdk-next';
 import { AppView, AppButton, Padding } from '../component';
 
 const Authen = ({ Actions }) => {
@@ -42,24 +41,24 @@ const Authen = ({ Actions }) => {
 	const [password, setPassword] = useState(__DEV__ ? "6548" : "")  //6548
 
 	useEffect(() => {
-		initGoogle();
-		Settings.initializeSDK();
+		// initGoogle();
+		// Settings.initializeSDK();
 	}, [])
 
-	const initGoogle = () => {
-		// initNotification();
-		GoogleSignin.configure({
-			scopes: ['email'], // what API you want to access
-			iosClientId:
-				'831856074930-24vd64gj35dlu68229qrfbgfhn4ohc3c.apps.googleusercontent.com',
-			webClientId:
-				'831856074930-qef2s73g5v4k5jt8tnhte5570bp9n1n8.apps.googleusercontent.com',
-			offlineAccess: true,
-			// hostedDomain: '',
-			// forceConsentPrompt: true,
-			// accountName: ''
-		});
-	}
+	// const initGoogle = () => {
+	// 	// initNotification();
+	// 	GoogleSignin.configure({
+	// 		scopes: ['email'], // what API you want to access
+	// 		iosClientId:
+	// 			'831856074930-24vd64gj35dlu68229qrfbgfhn4ohc3c.apps.googleusercontent.com',
+	// 		webClientId:
+	// 			'831856074930-qef2s73g5v4k5jt8tnhte5570bp9n1n8.apps.googleusercontent.com',
+	// 		offlineAccess: true,
+	// 		// hostedDomain: '',
+	// 		// forceConsentPrompt: true,
+	// 		// accountName: ''
+	// 	});
+	// }
 
 	const handleCancel = () => {
 		setDialog({
@@ -127,113 +126,113 @@ const Authen = ({ Actions }) => {
 	};
 
 	// notification
-	const initNotification = async () => {
-		await setPermission();
-		const fcmToken = await firebase.messaging().getToken();
-		setFcmToken(fcmToken)
-	};
+	// const initNotification = async () => {
+	// 	await setPermission();
+	// 	const fcmToken = await firebase.messaging().getToken();
+	// 	setFcmToken(fcmToken)
+	// };
 
-	const setPermission = async () => {
-		try {
-			const enabled = await firebase.messaging().hasPermission();
-			if (!enabled) {
-				await firebase.messaging().requestPermission();
-			}
-		} catch (error) {
-			console.log('Authen.js setPermission error : ', error);
-		}
-	};
+	// const setPermission = async () => {
+	// 	try {
+	// 		const enabled = await firebase.messaging().hasPermission();
+	// 		if (!enabled) {
+	// 			await firebase.messaging().requestPermission();
+	// 		}
+	// 	} catch (error) {
+	// 		console.log('Authen.js setPermission error : ', error);
+	// 	}
+	// };
 
 	// login facebook
-	const logoutWithFacebook = () => {
-		LoginManager.logOut();
-		setUserInfo({})
-	};
+	// const logoutWithFacebook = () => {
+	// 	LoginManager.logOut();
+	// 	setUserInfo({})
+	// };
 
-	const loginWithFacebook = () => {
-		// Attempt a login using the Facebook login dialog asking for default permissions.
-		LoginManager.logInWithPermissions(['email']).then(
-			login => {
-				if (login?.isCancelled) {
-					console.log('Login Facebook cancelled');
-				} else {
-					AccessToken.getCurrentAccessToken().then(data => {
-						const accessToken = data.accessToken.toString();
-						getInfoFromToken(accessToken);
-					});
-				}
-			},
-			error => {
-				console.log('Login fail with error: ' + error);
-				alert(error);
-			},
-		);
-	};
+	// const loginWithFacebook = () => {
+	// 	// Attempt a login using the Facebook login dialog asking for default permissions.
+	// 	LoginManager.logInWithPermissions(['email']).then(
+	// 		login => {
+	// 			if (login?.isCancelled) {
+	// 				console.log('Login Facebook cancelled');
+	// 			} else {
+	// 				AccessToken.getCurrentAccessToken().then(data => {
+	// 					const accessToken = data.accessToken.toString();
+	// 					getInfoFromToken(accessToken);
+	// 				});
+	// 			}
+	// 		},
+	// 		error => {
+	// 			console.log('Login fail with error: ' + error);
+	// 			alert(error);
+	// 		},
+	// 	);
+	// };
 
-	const getInfoFromToken = token => {
-		const PROFILE_REQUEST_PARAMS = {
-			fields: {
-				string: 'id,name,first_name,last_name,email',
-			},
-		};
-		const profileRequest = new GraphRequest(
-			'/me',
-			{ token, parameters: PROFILE_REQUEST_PARAMS },
-			(error, user) => {
-				if (error) {
-					console.log('login info has error: ' + error);
-					alert(error);
-				} else {
-					setUserInfo(user)
-					var body = {};
-					body.device_type = Platform.OS === 'ios' ? 'ios' : 'android';
-					body.device_token = fcmToken
-					body.social_type = 'facebook';
-					body.social_id = user?.id;
-					body.social_token = token;
-					body.name = user?.name;
-					body.email = user?.email;
-					pressLoginSocial(body);
-				}
-			},
-		);
-		new GraphRequestManager().addRequest(profileRequest).start();
-	};
+	// const getInfoFromToken = token => {
+	// 	const PROFILE_REQUEST_PARAMS = {
+	// 		fields: {
+	// 			string: 'id,name,first_name,last_name,email',
+	// 		},
+	// 	};
+	// 	const profileRequest = new GraphRequest(
+	// 		'/me',
+	// 		{ token, parameters: PROFILE_REQUEST_PARAMS },
+	// 		(error, user) => {
+	// 			if (error) {
+	// 				console.log('login info has error: ' + error);
+	// 				alert(error);
+	// 			} else {
+	// 				setUserInfo(user)
+	// 				var body = {};
+	// 				body.device_type = Platform.OS === 'ios' ? 'ios' : 'android';
+	// 				body.device_token = fcmToken
+	// 				body.social_type = 'facebook';
+	// 				body.social_id = user?.id;
+	// 				body.social_token = token;
+	// 				body.name = user?.name;
+	// 				body.email = user?.email;
+	// 				pressLoginSocial(body);
+	// 			}
+	// 		},
+	// 	);
+	// 	new GraphRequestManager().addRequest(profileRequest).start();
+	// };
 
 	// google
-	const googleSignIn = async () => {
-		try {
-			await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
-			const userInfo = await GoogleSignin.signIn();
+	// const googleSignIn = async () => {
+	// 	try {
+	// 		await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+	// 		const userInfo = await GoogleSignin.signIn();
 
-			var body = {};
-			body.device_type = Platform.OS === 'ios' ? 'ios' : 'android';
-			body.device_token = fcmToken
-			body.social_type = 'google';
-			body.social_id = userInfo?.user.id;
-			body.social_token = userInfo?.user.id;
-			body.name = userInfo?.user.name;
-			body.email = userInfo?.user.email;
+	// 		var body = {};
+	// 		body.device_type = Platform.OS === 'ios' ? 'ios' : 'android';
+	// 		body.device_token = fcmToken
+	// 		body.social_type = 'google';
+	// 		body.social_id = userInfo?.user.id;
+	// 		body.social_token = userInfo?.user.id;
+	// 		body.name = userInfo?.user.name;
+	// 		body.email = userInfo?.user.email;
 
-			pressLoginSocial(body);
-		} catch (error) {
-			alert(error.code);
-			console.log("Authen.js googleSignIn error : ", error);
-			if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-				// user cancelled the login flow
-				// alert('Cancel');
-			} else if (error.code === statusCodes.IN_PROGRESS) {
-				alert('Signin in progress' + error);
-				// operation (f.e. sign in) is in progress already
-			} else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-				alert('PLAY_SERVICES_NOT_AVAILABLE');
-				// play services not available or outdated
-			} else {
-				// some other error happened
-			}
-			setIsLoading(false)
-		}
-	};
+	// 		pressLoginSocial(body);
+	// 	} catch (error) {
+	// 		alert(error.code);
+	// 		console.log("Authen.js googleSignIn error : ", error);
+	// 		if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+	// 			// user cancelled the login flow
+	// 			// alert('Cancel');
+	// 		} else if (error.code === statusCodes.IN_PROGRESS) {
+	// 			alert('Signin in progress' + error);
+	// 			// operation (f.e. sign in) is in progress already
+	// 		} else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+	// 			alert('PLAY_SERVICES_NOT_AVAILABLE');
+	// 			// play services not available or outdated
+	// 		} else {
+	// 			// some other error happened
+	// 		}
+	// 		setIsLoading(false)
+	// 	}
+	// };
 
 	const pressLoginSocial = async (body) => {
 		try {
@@ -271,28 +270,27 @@ const Authen = ({ Actions }) => {
 	};
 
 	// apple
+	// const onAppleButtonPress = () => {
+	// 	// performs login request
+	// 	appleAuth
+	// 		.performRequest({
+	// 			requestedOperation: appleAuth.Operation.LOGIN,
+	// 			requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
+	// 		})
+	// 		.then(appleAuthRequestResponse => {
+	// 			let { identityToken, email, fullName } = appleAuthRequestResponse;
+	// 			var body = {};
+	// 			body.device_type = Platform.OS === 'ios' ? 'ios' : 'android';
+	// 			body.device_token = fcmToken
+	// 			body.social_type = 'apple';
+	// 			body.social_id = email;
+	// 			body.social_token = identityToken;
+	// 			body.name = fullName?.givenName + ' ' + fullName?.familyName;
+	// 			body.email = email;
 
-	const onAppleButtonPress = () => {
-		// performs login request
-		appleAuth
-			.performRequest({
-				requestedOperation: appleAuth.Operation.LOGIN,
-				requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
-			})
-			.then(appleAuthRequestResponse => {
-				let { identityToken, email, fullName } = appleAuthRequestResponse;
-				var body = {};
-				body.device_type = Platform.OS === 'ios' ? 'ios' : 'android';
-				body.device_token = fcmToken
-				body.social_type = 'apple';
-				body.social_id = email;
-				body.social_token = identityToken;
-				body.name = fullName?.givenName + ' ' + fullName?.familyName;
-				body.email = email;
-
-				pressLoginSocial(body);
-			});
-	};
+	// 			pressLoginSocial(body);
+	// 		});
+	// };
 
 	//     // get current authentication state for user
 	//     // /!\ This method must be tested on a real device. On the iOS simulator it always throws an error.
