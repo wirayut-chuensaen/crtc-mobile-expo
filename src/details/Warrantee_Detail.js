@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Dimensions, View } from 'react-native';
-import * as ExpoLinking from "expo-linking"
-import { Icon, Header, Button } from 'react-native-elements';
+import { Icon, Header } from 'react-native-elements';
 import Constant from '../utils/Constant';
 import { LinearGradient } from 'expo-linear-gradient';
 import { RowInfo } from '../items';
-import { cooperative_Detail } from "../service/Services"
+import { warranteeMe_Detail, warranteeWho_Detail } from "../service/Services"
 import useNavigator from '../utils/useNavigator';
 import { AppView } from '../component';
 
 const height = Dimensions.get('window').height;
 
-const Cooperative_Detail = ({ navigation, Actions, item }) => {
+const Warrantee_Detail = ({ navigation, Actions, item, isWarranteeWho = false }) => {
 	const [info, setInfo] = useState({})
 	const [isLoading, setIsLoading] = useState(false)
 
@@ -22,25 +21,28 @@ const Cooperative_Detail = ({ navigation, Actions, item }) => {
 	const init = async () => {
 		try {
 			setIsLoading(true)
-			await cooperative_Detail(item?.RECNO, (res, err) => {
-				if (res?.data?.status == true) {
-					setInfo(res?.data?.data?.net_bill[0])
-				} else {
-				}
-			});
+			if (!isWarranteeWho) {
+				await warranteeMe_Detail(item?.RECNO, (res, err) => {
+					if (res?.data?.status == true) {
+						setInfo(res?.data?.data?.guarantee_me_datail[0])
+					}
+				});
+			} else {
+				await warranteeWho_Detail(item?.RECNO, (res, err) => {
+					if (res?.data?.status == true) {
+						setInfo(res?.data?.data?.guarantee_who_datail[0])
+					}
+				});
+			}
 		} catch (e) {
-			console.log("Cooperatives_Detail.js init error : ", e)
+			console.log("Warrantee_Detail.js init error : ", e)
 		} finally {
 			setIsLoading(false)
 		}
 	}
 
-	const handleClick = (url) => {
-		ExpoLinking.openURL(encodeURI(url));
-	};
-
 	return (
-		<AppView isLoading={isLoading} style={{ flex: 1 }}>
+		<AppView isLoading={isLoading} style={styles.container}>
 			<Header
 				leftComponent={
 					<Icon
@@ -51,7 +53,7 @@ const Cooperative_Detail = ({ navigation, Actions, item }) => {
 						onPress={() => Actions.pop()}
 					/>
 				}
-				centerComponent={{ text: "ใบเสร็จ (สหกรณ์ฯ)", style: { color: '#fff' } }}
+				centerComponent={{ text: "การค้ำประกัน", style: { color: '#fff' } }}
 				innerContainerStyles={{ backgroundColor: Constant?.color?.violet }}
 				containerStyle={{
 					backgroundColor: Constant?.color?.violet,
@@ -68,28 +70,23 @@ const Cooperative_Detail = ({ navigation, Actions, item }) => {
 					style={styles.linearGradient}>
 					<View style={styles.content}>
 						<RowInfo keys="รายละเอียด" name="" />
-						<RowInfo keys="เลขที่ใบเสร็จ : " name={info?.BILL_NO} />
+						{/*<RowInfo keys="ประเภทสัญญา : " name={info?.loan_type} />*/}
+						<RowInfo keys="เลขที่สัญญา : " name={info?.LOAN_NO} />
 						<RowInfo
-							keys="วันที่ออกใบเสร็จ : "
-							name={info?.BILL_DATE}
+							keys="วันที่ทำสัญญา : "
+							name={info?.APPLY_DATE}
 						/>
-						<RowInfo keys="เลขสมาชิก : " name={info?.MEM_ID} />
+						<RowInfo keys="เลขที่สมาชิก : " name={info?.MEM_ID} />
 						<RowInfo
-							keys="ชื่อ - สกุล : "
-							name={info?.DISBURSE_NAME}
+							keys="ชื่อ - สกุล ผู้กู้ : "
+							name={!isWarranteeWho ? info?.WARRNAME : info?.MNAME}
 						/>
-						{/*<RowInfo keys="วงเงินค้ำฯ : " name={info?.STOCK_BAL} />*/}
+						<RowInfo keys="วงเงินค้ำฯ : " name={info?.AMOUNT} />
 						<RowInfo
-							keys="ยอดหักรวม : "
-							name={info?.AMOUNT}
+							keys="หนี้คงเหลือ : "
+							name={info?.BALANCE}
 							color={Constant?.color?.violet}
 						/>
-							<Button
-								title="ดูใบเสร็จและสั่งพิมพ์"
-								titleStyle={{ color: Constant?.color?.white }}
-								buttonStyle={styles.Button}
-								onPress={() => handleClick(info?.URL)}
-							/>
 					</View>
 				</LinearGradient>
 			</View>
@@ -97,7 +94,7 @@ const Cooperative_Detail = ({ navigation, Actions, item }) => {
 	);
 }
 
-export default useNavigator(Cooperative_Detail)
+export default useNavigator(Warrantee_Detail)
 
 const styles = StyleSheet.create({
 	content: {
@@ -116,13 +113,5 @@ const styles = StyleSheet.create({
 		flex: 1,
 		paddingLeft: 15,
 		paddingRight: 15,
-	},
-	Button: {
-		marginTop: 20,
-		margin: 10,
-		backgroundColor: Constant.color.violetlight,
-		borderRadius: 10,
-		borderWidth: 1,
-		borderColor: Constant.color.gray,
 	},
 });

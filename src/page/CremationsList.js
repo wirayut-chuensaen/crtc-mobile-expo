@@ -1,160 +1,122 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-  Platform,
-  StyleSheet,
-  Dimensions,
-  Text,
-  TextInput,
-  View,
-  Image,
-  FlatList,
-  Linking,
-  PermissionsAndroid,
-  TouchableOpacity,
+	StyleSheet,
+	Dimensions,
+	View,
+	FlatList,
 } from 'react-native';
-import { Icon, Header, Button } from 'react-native-elements';
-import Constant from '../util/Constant';
-
-import LinearGradient from 'react-native-linear-gradient';
-import RowInfo from '../item/RowInfo';
-import ItemInfo from '../item/ItemInfo';
-import Itemloan from '../item/Itemloan';
-import { cremationType } from '../../actions/Service';
-import ItemCremation from '../item/ItemCremation';
-import AppButton from '../component/AppButton';
-import SizedBox from '../component/SizedBox';
+import { Icon, Header } from 'react-native-elements';
+import Constant from '../utils/Constant';
+import { LinearGradient } from 'expo-linear-gradient';
+import { cremationType } from "../service/Services"
+import { AppButton, SizedBox, AppView } from '../component';
+import useNavigator from '../utils/useNavigator';
 
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
 
-export default class CreamtionsList extends Component {
-  state = {
-    title: 'สมาคม',
-    item: [],
-    refreshing: false,
-  };
+const CreamtionsList = ({ navigation, Actions }) => {
+	const [isLoading, setIsLoading] = useState(false)
+	const [item, setItem] = useState([])
+	const [refreshing, setRefreshing] = useState(false)
 
-  componentWillUnmount() { }
+	useEffect(() => {
+		initialData()
+	}, [])
 
-  initialData() {
-    cremationType((res, done) => {
-      if (done && res.data.status === true) {
-        console.log("cremationType res : ", res.data)
-        this.setState({
-          item: res.data.cremation_type,
-          refreshing: false,
-        });
-      } else {
-        this.setState({ refreshing: false });
-      }
-    });
-  }
+	const initialData = async (isRefresh = false) => {
+		try {
+			if (!isRefresh) {
+				setIsLoading(true)
+			} else {
+				setRefreshing(true)
+			}
+			await cremationType((res, done) => {
+				// console.log("cremationType res : ", res)
+				if (done && res?.data?.status === true) {
+					setItem(res?.data?.cremation_type)
+				}
+			});
+		} catch (e) {
+			console.log("CremationsList initialData error : ", e)
+		} finally {
+			setIsLoading(false)
+			setRefreshing(false)
+		}
+	}
 
-  componentDidMount() {
-    this.initialData();
-    this._handleRefresh = this._handleRefresh.bind(this);
-  }
+	return (
+		<AppView isLoading={isLoading} style={styles.container}>
+			<Header
+				leftComponent={
+					<Icon
+						name="chevron-thin-left"
+						type="entypo"
+						color="#fff"
+						iconStyle={{ backgroundColor: Constant?.color?.violet }}
+						onPress={() => Actions.pop()}
+					/>
+				}
+				centerComponent={{ text: "สมาคม", style: { color: '#fff' } }}
+				innerContainerStyles={{ backgroundColor: Constant?.color?.violet }}
+				containerStyle={{
+					backgroundColor: Constant?.color?.violet,
+					borderBottomColor: Constant?.color?.violet,
+				}}
+			/>
 
-  _handleRefresh() {
-    this.setState({ refreshing: true });
-    this.initialData();
-  }
-
-  render() {
-    return (
-      <View style={styles.container}>
-        <Header
-          leftComponent={
-            <Icon
-              name="chevron-thin-left"
-              type="entypo"
-              color="#fff"
-              iconStyle={{ backgroundColor: Constant.color.violet }}
-              onPress={() => this.props.navigation.goBack()}
-            />
-          }
-          centerComponent={{ text: this.state.title, style: { color: '#fff' } }}
-          innerContainerStyles={{ backgroundColor: Constant.color.violet }}
-          containerStyle={{
-            backgroundColor: Constant.color.violet,
-            borderBottomColor: Constant.color.violet,
-          }}
-        />
-
-        <View style={styles.body}>
-          <LinearGradient
-            locations={[0, 0.4]}
-            colors={[Constant.color.violetlight, Constant.color.darkPurple]}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 0, y: 1 }}
-            style={styles.linearGradient}>
-            <View style={styles.content}>
-              <FlatList
-                itemDimension={width - 20}
-                data={this.state.item}
-                style={styles.gridView}
-                numColumns={1}
-                keyExtractor={item => item.id}
-                ItemSeparatorComponent={() => <SizedBox height={10} />}
-                ListHeaderComponent={() => <SizedBox height={20} />}
-                refreshing={this.state.refreshing}
-                onRefresh={this._handleRefresh}
-                renderItem={({ item, index }) => (
-                  <AppButton text={item.name} onPress={() =>
-                    this.props.navigation.navigate('Cremations', { type: item.id })
-                  } />
-                )}
-              />
-            </View>
-          </LinearGradient>
-        </View>
-      </View>
-    );
-  }
+			<View style={styles.body}>
+				<LinearGradient
+					locations={[0, 0.4]}
+					colors={[Constant?.color?.violetlight, Constant?.color?.darkPurple]}
+					start={{ x: 0, y: 0 }}
+					end={{ x: 0, y: 1 }}
+					style={styles.linearGradient}>
+					<View style={styles.content}>
+						<FlatList
+							itemDimension={width - 20}
+							data={item}
+							style={styles.gridView}
+							numColumns={1}
+							keyExtractor={(data, index) => `item${index}`}
+							ItemSeparatorComponent={() => <SizedBox height={10} />}
+							ListHeaderComponent={() => <SizedBox height={20} />}
+							refreshing={refreshing}
+							onRefresh={() => initialData(true)}
+							renderItem={({ item, index }) => (
+								<AppButton text={item.name} onPress={() =>
+									Actions.push('Cremations', { type: item?.id })
+								} />
+							)}
+						/>
+					</View>
+				</LinearGradient>
+			</View>
+		</AppView>
+	);
 }
 
+export default useNavigator(CreamtionsList)
+
 const styles = StyleSheet.create({
-  gridView: {
-    marginHorizontal: 10,
-  },
-  content: {
-    flex: 1,
-    flexDirection: 'column',
-    marginTop: 15,
-    backgroundColor: Constant.color.white,
-    borderRadius: 5,
-    borderWidth: 1,
-    borderColor: Constant.color.gray,
-  },
-
-  contents: {
-    flexDirection: 'column',
-    marginTop: 15,
-    backgroundColor: Constant.color.white,
-    borderRadius: 5,
-    borderWidth: 1,
-    borderColor: Constant.color.gray,
-  },
-
-  body: {
-    height: height - 80,
-  },
-
-  wapper_content: {
-    flex: 1,
-  },
-  linearGradient: {
-    flex: 1,
-    paddingLeft: 15,
-    paddingRight: 15,
-  },
-  Button: {
-    margin: 10,
-    marginBottom: 15,
-    marginTop: 15,
-    backgroundColor: Constant.color.violetlight,
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: Constant.color.white,
-  },
+	gridView: {
+		marginHorizontal: 10,
+	},
+	content: {
+		flex: 1,
+		flexDirection: 'column',
+		marginTop: 15,
+		backgroundColor: Constant.color.white,
+		borderRadius: 5,
+		borderWidth: 1,
+		borderColor: Constant?.color?.gray,
+	},
+	body: {
+		height: height - 80,
+	},
+	linearGradient: {
+		flex: 1,
+		paddingLeft: 15,
+		paddingRight: 15,
+	},
 });

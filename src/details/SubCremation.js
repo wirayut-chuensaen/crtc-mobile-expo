@@ -1,129 +1,89 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-  StyleSheet,
-  Dimensions,
-  View,
-  FlatList,
-  TouchableOpacity,
-  Text,
+	StyleSheet,
+	Dimensions,
+	View,
+	FlatList,
+	TouchableOpacity,
+	Text,
+	ActivityIndicator,
 } from 'react-native';
-import Constant from '../util/Constant';
+import Constant from '../utils/Constant';
+import { cremation } from "../service/Services"
+import { ItemCremation } from '../items';
 
-import { cremation } from '../../actions/Service';
-import ItemCremation from '../item/ItemCremation';
-
-const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
 
-export default class SubCremation extends Component {
-  state = {
-    title: 'ใบเสร็จ (สมาคมฯ)',
-    item: [],
-    refreshing: false,
-  };
+const SubCremation = ({ navigation, Actions, type }) => {
+	const [item, setItem] = useState([])
+	const [refreshing, setRefreshing] = useState(false)
+	const [isLoading, setIsLoading] = useState(false)
 
-  componentDidMount() {
-    this.onLoadData();
-  }
+	useEffect(() => {
+		onLoadData()
+	}, [])
 
-  componentWillUnmount() { }
+	const onLoadData = async (isRefresh = false) => {
+		try {
+			if (!isRefresh) {
+				setIsLoading(true)
+			} else {
+				setRefreshing(true)
+			}
+			await cremation(type, (res, err) => {
+				// console.log("cremation res : ", res)
+				if (res?.data?.status == true) {
+					setItem(res?.data?.data?.cremation)
+				}
+			});
+		} catch (e) {
+			console.log("Subcremation.js onLoadData error : ", e)
+		} finally {
+			setIsLoading(false)
+			setRefreshing(false)
+		}
+	}
 
-  onLoadData() {
-    cremation(this.props.type, (res, err) => {
-      console.log("cremation history res : ", res)
-      if (res.data.status == true) {
-        this.setState({
-          item: res.data.data.cremation,
-        });
-      } else {
-      }
-    });
-  }
-
-  _handleRefresh = () => {
-    this.setState({
-      refreshing: true,
-    });
-    cremation((res, err) => {
-      if (res.data.status == true) {
-        this.setState({
-          refreshing: false,
-          item: res.data.data.redemptions,
-        });
-      } else {
-        this.setState({
-          refreshing: false,
-        });
-      }
-    });
-  };
-
-  render() {
-    return (
-      <View style={styles.content}>
-        <Text style={{ fontWeight: 'bold', fontSize: 16 }}>
-          ประวัติการชำระเงินสงเคราะห์
-        </Text>
-        <FlatList
-          itemDimension={width - 20}
-          data={this.state.item}
-          style={styles.gridView}
-          numColumns={1}
-          keyExtractor={(item) => item.id}
-          // ItemSeparatorComponent={() => <Divider style={{ marginTop: 5, marginLeft: width * 0.2 + 20 }} parentStyle={{ backgroundColor: globalStyles.BG_COLOR, alignItems: 'baseline' }} />}
-          refreshing={this.state.refreshing}
-          onRefresh={this._handleRefresh}
-          renderItem={({ item, index }) => (
-            <TouchableOpacity
-              key={index}
-              onPress={() =>
-                this.props.navigation.navigate('Cremation_Detail', { item, cremention_type_id: this.props.type })
-              }>
-              <ItemCremation {...item} />
-            </TouchableOpacity>
-          )}
-        />
-      </View>
-    );
-  }
+	return (
+		<View style={styles.content}>
+			<Text style={{ fontWeight: 'bold', fontSize: 16 }}>
+				ประวัติการชำระเงินสงเคราะห์
+			</Text>
+			{
+				!isLoading ?
+					<FlatList
+						itemDimension={width - 20}
+						data={item}
+						numColumns={1}
+						keyExtractor={(data, index) => `item${index}`}
+						refreshing={refreshing}
+						onRefresh={() => onLoadData(true)}
+						renderItem={({ item, index }) => (
+							<TouchableOpacity
+								key={index}
+								onPress={() =>
+									Actions.push('Cremation_Detail', { item, cremention_type_id: type })
+								}>
+								<ItemCremation {...item} />
+							</TouchableOpacity>
+						)}
+					/>
+					:
+					<View style={{ justifyContent: "center", alignItems: "center", marginVertical: "30%" }}>
+						<ActivityIndicator size="large" color={Constant?.color?.violet} />
+					</View>
+			}
+		</View>
+	);
 }
 
+export default SubCremation
+
 const styles = StyleSheet.create({
-  content: {
-    flex: 1,
-    flexDirection: 'column',
-    marginTop: 15,
-    backgroundColor: Constant.color.white,
-  },
-
-  contents: {
-    flexDirection: 'column',
-    marginTop: 15,
-    backgroundColor: Constant.color.white,
-    borderRadius: 5,
-    borderWidth: 1,
-    borderColor: Constant.color.gray,
-  },
-
-  body: {
-    height: height - 80,
-  },
-
-  wapper_content: {
-    flex: 1,
-  },
-  linearGradient: {
-    flex: 1,
-    paddingLeft: 15,
-    paddingRight: 15,
-  },
-  Button: {
-    margin: 10,
-    marginBottom: 15,
-    marginTop: 15,
-    backgroundColor: Constant.color.violetlight,
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: Constant.color.white,
-  },
+	content: {
+		flex: 1,
+		flexDirection: 'column',
+		marginTop: 15,
+		backgroundColor: Constant.color.white,
+	},
 });

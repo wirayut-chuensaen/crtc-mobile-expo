@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
 	Text,
 	View,
@@ -7,16 +7,17 @@ import {
 	Dimensions,
 	TouchableOpacity,
 	BackHandler,
+	Alert,
 } from 'react-native';
-import { Icon, Dialog, Button } from 'react-native-elements';
+import { Icon, Dialog } from 'react-native-elements';
 import { LinearGradient } from 'expo-linear-gradient';
 import { checkCondition, createUserPin, loginWithPin } from "../service/Services"
 import Constant from '../utils/Constant';
 import { Tab } from './Launcher';
 import useNavigator from '../utils/useNavigator';
-import useDisableBackButton from '../utils/useDisableBackButton';
 import { AppView } from '../component';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useFocusEffect } from '@react-navigation/native';
 
 const Dot = ({ check = false }) => (
 	<Icon
@@ -59,12 +60,15 @@ const VerifyPin = ({
 		if (pin.length == 6) checkPin();
 	}, [pin])
 
-	useEffect(() => {
-		const backAction = useDisableBackButton(canBack);
-		BackHandler.addEventListener('hardwareBackPress', backAction);
-		return () =>
-			BackHandler.removeEventListener('hardwareBackPress', backAction);
-	}, []);
+	useFocusEffect(
+		useCallback(() => {
+			const backHandler = BackHandler.addEventListener(
+				'hardwareBackPress',
+				checkPressBack,
+			);
+			return () => backHandler.remove();
+		}, [])
+	)
 
 	const handleCancel = () => {
 		setDialog({
@@ -85,9 +89,9 @@ const VerifyPin = ({
 					setTitle('ใส่รหัส Pin เพื่อดำเนินการต่อ');
 				}
 			});
-			setIsLoading(false)
 		} catch (e) {
 			console.log("VerifyPin.js checkMode error : ", e)
+		} finally {
 			setIsLoading(false)
 		}
 	};
@@ -129,9 +133,9 @@ const VerifyPin = ({
 					})
 				}
 			});
-			setIsLoading(false)
 		} catch (e) {
 			console.log("VerifyPin.js loginWithPinData error : ", e)
+		} finally {
 			setIsLoading(false)
 		}
 	};
@@ -166,9 +170,10 @@ const VerifyPin = ({
 					});
 				}
 			}
-			setIsLoading(false)
 		} catch (e) {
 			console.log("VerifyPin.js checkPin error : ", e)
+		} finally {
+			setIsLoading(false)
 		}
 	};
 
@@ -247,6 +252,22 @@ const VerifyPin = ({
 		} else {
 			return (<View style={{ marginTop: 80 }} />)
 		}
+	}
+
+	const checkPressBack = () => {
+		if (!navigation.canGoBack()) {
+			Alert.alert('แจ้งเตือน', 'ยืนยันที่จะออกจากแอปหรือไม่?', [
+				{
+					text: 'ยกเลิก',
+					onPress: () => null,
+					style: 'cancel',
+				},
+				{ text: 'ตกลง', onPress: () => BackHandler.exitApp() },
+			]);
+		} else {
+			Actions.pop()
+		}
+		return true;
 	}
 
 	return (

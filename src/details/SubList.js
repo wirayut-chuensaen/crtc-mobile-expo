@@ -1,92 +1,81 @@
-import React, {Component} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
-  StyleSheet,
-  Dimensions,
-  View,
-  TouchableOpacity,
-  FlatList,
+	StyleSheet,
+	View,
+	TouchableOpacity,
+	FlatList,
+	ActivityIndicator,
 } from 'react-native';
-import Constant from '../util/Constant';
-import ItemWarrantee from '../items/ItemWarrantee';
+import Constant from '../utils/Constant';
+import { ItemWarrantee } from '../items';
+import { warranteeMe } from "../service/Services"
 
-import {warranteeMe} from '../../actions/Service';
+const SubList = ({ navigation, Actions }) => {
+	const [item, setItem] = useState([])
+	const [isLoading, setIsLoading] = useState(false)
+	const [refreshing, setRefreshing] = useState(false)
 
-const height = Dimensions.get('window').height;
-const width = Dimensions.get('window').width;
+	useEffect(() => {
+		onLoadData()
+	}, [])
 
-export default class SubList extends Component {
-  state = {
-    title: 'ติดต่อเรา',
-    item: [],
-    refreshing: false,
-  };
+	const onLoadData = async (isRefresh = false) => {
+		try {
+			if (!isRefresh) {
+				setIsLoading(true)
+			} else {
+				setRefreshing(true)
+			}
+			await warranteeMe((res, err) => {
+				// console.log("warranteeMe res : ", res)
+				if (res?.data?.status == true) {
+					setItem(res?.data?.data?.guarantee_me)
+				}
+			});
+		} catch (e) {
+			console.log("SubList.js onLoadData error : ", e)
+		} finally {
+			setIsLoading(false)
+			setRefreshing(false)
+		}
+	}
 
-  componentDidMount() {
-    this.onLoadData();
-  }
-
-  componentWillUnmount() {}
-
-  onLoadData() {
-    warranteeMe((res, err) => {
-      if (res.data.status == true) {
-        this.setState({
-          item: res.data.data.guarantee_me,
-        });
-      } else {
-      }
-    });
-  }
-
-  _handleRefresh = () => {
-    this.setState({
-      refreshing: true,
-    });
-    warranteeMe((res, err) => {
-      if (res.data.status == true) {
-        this.setState({
-          item: res.data.data.guarantee_me,
-          refreshing: false,
-        });
-      } else {
-        this.setState({
-          refreshing: false,
-        });
-      }
-    });
-  };
-
-  render() {
-    return (
-      <View style={styles.content}>
-        <FlatList
-          data={this.state.item}
-          style={styles.gridView}
-          numColumns={1}
-          keyExtractor={(item) => item.id}
-          // ItemSeparatorComponent={() => <Divider style={{ marginTop: 5, marginLeft: width * 0.2 + 20 }} parentStyle={{ backgroundColor: globalStyles.BG_COLOR, alignItems: 'baseline' }} />}
-          refreshing={this.state.refreshing}
-          onRefresh={this._handleRefresh}
-          renderItem={({item, index}) => (
-            <TouchableOpacity
-              onPress={() =>
-                this.props.navigation.navigate('WarranteeMe_Detail', {item})
-              }>
-              <ItemWarrantee {...item} />
-            </TouchableOpacity>
-          )}
-        />
-      </View>
-    );
-  }
+	return (
+		<View style={styles.content}>
+			{
+				!isLoading ?
+					<FlatList
+						data={item}
+						numColumns={1}
+						keyExtractor={(data, index) => `item_${index}`}
+						refreshing={refreshing}
+						onRefresh={() => onLoadData(true)}
+						renderItem={({ item, index }) => (
+							<TouchableOpacity
+								onPress={() =>
+									Actions.push('Warrantee_Detail', { item, isWarranteeWho: false })
+								}>
+								<ItemWarrantee {...item} />
+							</TouchableOpacity>
+						)}
+					/>
+					:
+					<View style={{ justifyContent: "center", alignItems: "center", marginVertical: "50%" }}>
+						<ActivityIndicator size="large" color={Constant?.color?.violet} />
+					</View>
+			}
+		</View>
+	);
 }
 
+export default SubList
+
 const styles = StyleSheet.create({
-  content: {
-    flex: 1,
-    marginTop: 10,
-    flexDirection: 'column',
-    backgroundColor: Constant.color.white,
-    borderRadius: 5,
-  },
+	content: {
+		flex: 1,
+		marginTop: 10,
+		flexDirection: 'column',
+		backgroundColor: Constant?.color?.white,
+		borderRadius: 5,
+	},
 });

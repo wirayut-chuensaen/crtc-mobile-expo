@@ -3,7 +3,7 @@
     "name": "CRTC",
     "slug": "crtc",
     "scheme": "crtc",
-    "version": "3.3.6",
+    "version": "3.4.0",
     "orientation": "portrait",
     "icon": "./assets/logo.png",
     "userInterfaceStyle": "light",
@@ -11,6 +11,8 @@
       "**/*"
     ],
     "updates": {
+      "enabled": true,
+      "fallbackToCacheTimeout": 0,
       "url": "https://u.expo.dev/906d171b-9101-4954-b4a2-9ef1fb445007"
     },
     "ios": {
@@ -29,7 +31,7 @@
     "android": {
       "package": "th.co.crtc",
       "googleServicesFile": "./google-services.json",
-      "versionCode": 48,
+      "versionCode": 49,
       "permissions": [
         "INTERNET",
         "ACCESS_NETWORK_STATE",
@@ -46,6 +48,7 @@
       ]
     },
     "plugins": [
+      "expo-updates",
       [
         "expo-tracking-transparency",
         {

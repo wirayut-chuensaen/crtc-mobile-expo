@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet, Text, Image, Dimensions, Platform } from "react-native";
+import { View, StyleSheet, Image, Dimensions, Platform } from "react-native";
 import ContextProvider from "./context/state"
-import * as Updates from "expo-updates";
+import * as ExpoUpdates from "expo-updates";
 import { LinearGradient } from 'expo-linear-gradient';
 import Constant from "./utils/Constant"
 import { LinearProgress } from "react-native-elements";
@@ -11,9 +11,7 @@ import { requestTrackingPermissionsAsync } from 'expo-tracking-transparency';
 const screenWidth = Dimensions.get("window").width
 
 const Main = () => {
-	const [isLoading, setIsLoading] = useState(false)
-	const [updateProgress, setUpdateProgress] = useState(0)
-	const [updateStatusText, setUpdateStatusText] = useState("กำลังตรวจสอบการอัพเดต...")
+	const [isLoading, setIsLoading] = useState(true)
 
 	useEffect(() => {
 		initApp()
@@ -23,17 +21,23 @@ const Main = () => {
 	const initApp = async () => {
 		try {
 			if (!__DEV__) {
-				const update = await Updates.checkForUpdateAsync();
+				const update = await ExpoUpdates.checkForUpdateAsync();
+				console.log("update isAvailable : ", update.isAvailable);
 				if (update.isAvailable) {
-					await Updates.fetchUpdateAsync();
-					await Updates.reloadAsync();
+					console.log("update available...")
+					await ExpoUpdates.fetchUpdateAsync();
+					console.log("update fetchUpdateAsync...")
+					await ExpoUpdates.reloadAsync();
+					console.log("update reloadAsync...")
 				}
 			}
 		} catch (e) {
 			console.log("App.js initApp error : ", e)
 		} finally {
+			console.log("finally")
 			setTimeout(() => {
-				setIsLoading(true)
+				console.log("setIsLoading(false)")
+				setIsLoading(false)
 			}, 3000)
 		}
 	}
@@ -49,7 +53,7 @@ const Main = () => {
 	}
 
 	return (
-		isLoading ?
+		!isLoading ?
 			<ContextProvider>
 				<Routes />
 			</ContextProvider>
@@ -64,9 +68,8 @@ const Main = () => {
 				>
 					<View style={styles.container}>
 						<Image source={require("./../assets/logo.png")} style={{ width: screenWidth * 0.6, height: screenWidth * 0.6 }} resizeMode="contain" />
-						<Text style={styles.updateTextStatusStyle}>{updateStatusText}</Text>
 						<LinearProgress
-							style={{ width: screenWidth * 0.6 }}
+							style={{ width: screenWidth * 0.6, marginTop: 16 }}
 							color={Constant?.color?.violetlight}
 							variant="indeterminate"
 						/>
@@ -84,10 +87,4 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		alignItems: "center",
 	},
-	updateTextStatusStyle: {
-		color: Constant.color.white,
-		fontSize: 16,
-		fontWeight: "bold",
-		marginVertical: 10,
-	}
 })

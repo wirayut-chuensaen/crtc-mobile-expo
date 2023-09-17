@@ -17,7 +17,6 @@ import * as Application from 'expo-application';
 import Constant from "../../utils/Constant"
 import showError from '../../utils/showError';
 
-const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
 
 const baseLocalImagePath = "../../../assets/"
@@ -102,9 +101,9 @@ const Home = ({ navigation, route, onLoadingChange }) => {
 					});
 				}
 			})
-			onLoadingChange(false)
 		} catch (e) {
 			console.log("Home.js checkLinkAccount error : ", e)
+		} finally {
 			onLoadingChange(false)
 		}
 	}
@@ -147,7 +146,6 @@ const Home = ({ navigation, route, onLoadingChange }) => {
 			onLoadingChange(true)
 			await account((res, done) => {
 				// console.log('account res : ', res)
-				onLoadingChange(false)
 				if (done && res?.data?.status) {
 					onLoadingChange(true)
 					checkCondition((res, done) => {
@@ -168,6 +166,7 @@ const Home = ({ navigation, route, onLoadingChange }) => {
 			});
 		} catch (e) {
 			console.log("Home.js checkVerifyPin error : ", e)
+		} finally {
 			onLoadingChange(false)
 		}
 	};
@@ -186,9 +185,9 @@ const Home = ({ navigation, route, onLoadingChange }) => {
 					}
 				}
 			});
-			onLoadingChange(false)
 		} catch (e) {
 			console.log("Home.js onLoadData error : ", e)
+		} finally {
 			onLoadingChange(false)
 		}
 	};
