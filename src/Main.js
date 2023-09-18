@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet, Image, Dimensions, Platform } from "react-native";
+import { View, StyleSheet, Image, Dimensions } from "react-native";
 import ContextProvider from "./context/state"
 import * as ExpoUpdates from "expo-updates";
 import { LinearGradient } from 'expo-linear-gradient';
 import Constant from "./utils/Constant"
 import { LinearProgress } from "react-native-elements";
 import Routes from "./Routes";
-import { requestTrackingPermissionsAsync } from 'expo-tracking-transparency';
 
 const screenWidth = Dimensions.get("window").width
 
@@ -15,40 +14,29 @@ const Main = () => {
 
 	useEffect(() => {
 		initApp()
-		initTrackingTransparency()
 	}, [])
 
 	const initApp = async () => {
 		try {
 			if (!__DEV__) {
 				const update = await ExpoUpdates.checkForUpdateAsync();
-				console.log("update isAvailable : ", update.isAvailable);
+				// console.log("update isAvailable : ", update.isAvailable);
 				if (update.isAvailable) {
-					console.log("update available...")
+					// console.log("update available...")
 					await ExpoUpdates.fetchUpdateAsync();
-					console.log("update fetchUpdateAsync...")
+					// console.log("update fetchUpdateAsync...")
 					await ExpoUpdates.reloadAsync();
-					console.log("update reloadAsync...")
+					// console.log("update reloadAsync...")
 				}
 			}
 		} catch (e) {
 			console.log("App.js initApp error : ", e)
 		} finally {
-			console.log("finally")
+			// console.log("finally")
 			setTimeout(() => {
-				console.log("setIsLoading(false)")
+				// console.log("setIsLoading(false)")
 				setIsLoading(false)
 			}, 3000)
-		}
-	}
-
-	// only ios
-	const initTrackingTransparency = async () => {
-		if (Platform.OS === "ios") {
-			const { status } = await requestTrackingPermissionsAsync();
-			if (status === 'granted') {
-				// console.log('Yay! I have user permission to track data');
-			}
 		}
 	}
 

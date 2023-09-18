@@ -95,7 +95,7 @@ const Home = ({ navigation, route, onLoadingChange }) => {
 				if (done && res?.data?.status) {
 					callback && callback();
 				} else {
-					showError(res?.data?.message || "เกิดผิดพลาด");
+					showError(res?.data?.message);
 					navigation.navigate('CoopAccountNotLink', {
 						url: res?.data?.data["link-account-url"],
 					});

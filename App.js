@@ -5,13 +5,13 @@ import Toast from 'react-native-toast-message';
 
 const App = () => {
 	useEffect(() => {
-		init( )
+		init()
 	}, [])
 
 	const init = () => {
 		StatusBar.setBarStyle('light-content');
 		Platform.OS === 'android' && StatusBar.setBackgroundColor('transparent');
-		StatusBar.setTranslucent(true);
+		Platform.OS === "android" && StatusBar.setTranslucent(true);
 		LogBox.ignoreAllLogs(true)
 	}
 

@@ -1,13 +1,15 @@
 import React from 'react'
-import { View, StyleSheet } from 'react-native'
-import Constant from '../utils/Constant'
+import { View, StyleSheet, KeyboardAvoidingView, Platform } from 'react-native'
 import { AppLoading } from '.'
 
 const AppView = ({ children, style, isLoading = false }) => (
-    <View style={[styles.baseContainer, { ...style }]}>
+    <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={[styles.baseContainer, { ...style }]}
+    >
         {isLoading && <AppLoading />}
         {children}
-    </View>
+    </KeyboardAvoidingView>
 )
 
 export default AppView
@@ -15,6 +17,8 @@ export default AppView
 const styles = StyleSheet.create({
     baseContainer: {
         flex: 1,
-        // backgroundColor: Constant?.color?.white,
-    }
+    },
+    container: {
+        flex: 1,
+    },
 })

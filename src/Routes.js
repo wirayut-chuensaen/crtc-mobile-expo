@@ -31,6 +31,12 @@ import Dividend from './page/Dividend';
 import Dividend_Detail from './details/Dividend_Detail';
 import FormChangeDividend from './page/FormChangeDividend';
 import FormCreateBankAccount from './page/FormCreateBankAccount';
+import RequestLoanList from './page/Loan/RequestLoanList';
+import FormRequestLoan from './page/Loan/FormRequestLoan';
+import FormCoopDeposit from './page/CoopDeposit/FormCoopDeposit';
+import CoopDepositSuccess from './page/CoopDeposit/CoopDepositSuccess';
+import CoopDepositConfirm from './page/CoopDeposit/CoopDepositConfirm';
+import CoopOtp from './page/CoopOtp';
 
 // import News from '../page/News';
 // import NewsDetail from '../detail/NewsDetail';
@@ -57,7 +63,7 @@ import FormCreateBankAccount from './page/FormCreateBankAccount';
 
 // import FormChangeDeposit from '../page/FormChangeDeposit';
 // import FormChangeLoan from '../page/FormChangeLoan';
-// import FormRequestLoan from '../page/Loan/FormRequestLoan';
+
 // import FormUploadDocument from '../page/Loan/FormUploadDocument';
 // import FormCoopLoan from '../page/CoopLoan/FormCoopLoan';
 // import CoopLoanConfirm from '../page/CoopLoan/CoopLoanConfirm';
@@ -66,15 +72,9 @@ import FormCreateBankAccount from './page/FormCreateBankAccount';
 // import CoopWithdrawConfirm from '../page/CoopWithdraw/CoopWithdrawConfirm';
 // import CoopWithdrawSuccess from '../page/CoopWithdraw/CoopWithdrawSuccess';
 // import LoanCalculate from '../page/Loan/LoanCalculate';
-// import RequestLoanList from '../page/Loan/RequestLoanList';
-// import CoopOtp from '../page/CoopOtp';
+
 // import CoopLinkAccount from '../page/CoopLinkAccount';
 // import CoopAccountNotLink from '../page/CoopAccountNotLink';
-// import CoopDepositSuccess from '../page/CoopDeposit/CoopDepositSuccess';
-// import FormCoopDeposit from '../page/CoopDeposit/FormCoopDeposit';
-// import CoopDepositConfirm from '../page/CoopDeposit/CoopDepositConfirm';
-
-
 
 const Stack = createNativeStackNavigator();
 
@@ -118,6 +118,12 @@ const Routes = () => {
         <Stack.Screen name="Dividend_Detail" component={Dividend_Detail} />
         <Stack.Screen name="FormChangeDividend" component={FormChangeDividend} />
         <Stack.Screen name="FormCreateBankAccount" component={FormCreateBankAccount} />
+        <Stack.Screen name="RequestLoanList" component={RequestLoanList} />
+        <Stack.Screen name="FormRequestLoan" component={FormRequestLoan} />
+        <Stack.Screen name="FormCoopDeposit" component={FormCoopDeposit} />
+        <Stack.Screen name="CoopDepositConfirm" component={CoopDepositConfirm} />
+        <Stack.Screen name="CoopOtp" component={CoopOtp} />
+        <Stack.Screen name="CoopDepositSuccess" component={CoopDepositSuccess} />
 
         {/*
         
@@ -154,7 +160,6 @@ const Routes = () => {
         <Stack.Screen name="FormChangeDeposit" component={FormChangeDeposit} />
         <Stack.Screen name="FormChangeLoan" component={FormChangeLoan} />
 
-        <Stack.Screen name="FormRequestLoan" component={FormRequestLoan} />
         <Stack.Screen
           name="FormUploadDocument"
           component={FormUploadDocument}
@@ -170,22 +175,12 @@ const Routes = () => {
           component={CoopWithdrawSuccess}
         />
 
-        <Stack.Screen name="FormCoopDeposit" component={FormCoopDeposit} />
-        <Stack.Screen name="CoopDepositConfirm" component={CoopDepositConfirm} />
-        <Stack.Screen
-          name="CoopDepositSuccess"
-          component={CoopDepositSuccess}
-        />
-
         <Stack.Screen name="FormCoopLoan" component={FormCoopLoan} />
         <Stack.Screen name="CoopLoanConfirm" component={CoopLoanConfirm} />
         <Stack.Screen name="CoopLoanSuccess" component={CoopLoanSuccess} />
 
-
-
         <Stack.Screen name="LoanCalculate" component={LoanCalculate} />
-        <Stack.Screen name="RequestLoanList" component={RequestLoanList} />
-        <Stack.Screen name="CoopOtp" component={CoopOtp} />
+      
         <Stack.Screen name="CoopLinkAccount" component={CoopLinkAccount} />
         <Stack.Screen name="CoopAccountNotLink" component={CoopAccountNotLink} />
 

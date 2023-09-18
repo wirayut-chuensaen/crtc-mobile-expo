@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import {
 	Platform,
 	StyleSheet,
@@ -31,6 +31,7 @@ import { LinearGradient } from "expo-linear-gradient"
 import * as Application from 'expo-application';
 import useNavigator from '../utils/useNavigator';
 import { AppView, AppButton, Padding } from '../component';
+import { AppContext } from '../context';
 
 const Authen = ({ Actions }) => {
 	const [isLoading, setIsLoading] = useState(false)
@@ -39,6 +40,7 @@ const Authen = ({ Actions }) => {
 	const [userInfo, setUserInfo] = useState({})
 	const [username, setUsername] = useState(__DEV__ ? "eaku" : "")  //eaku
 	const [password, setPassword] = useState(__DEV__ ? "6548" : "")  //6548
+	const { setToken, setMemId, setUserPin } = useContext(AppContext)
 
 	useEffect(() => {
 		// initGoogle();
@@ -88,8 +90,11 @@ const Authen = ({ Actions }) => {
 							['token', JSON.stringify(userInfo?.token)],
 							['mem_id', userInfo?.mem_id],
 						]);
+						setToken(JSON.stringify(userInfo?.token))
+						setMemId(userInfo?.mem_id)
 						if (userPin?.pin && userPin?.pin !== null) {
 							await AsyncStorage.setItem('pin', `${userPin?.pin}`);
+							setUserPin(userPin?.pin)
 						}
 						Actions.replace('Launcher');
 					} else {

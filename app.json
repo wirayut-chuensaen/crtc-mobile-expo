@@ -48,13 +48,7 @@
       ]
     },
     "plugins": [
-      "expo-updates",
-      [
-        "expo-tracking-transparency",
-        {
-          "userTrackingPermission": "This identifier will be used to deliver personalized ads to you."
-        }
-      ]
+      "expo-updates"
     ],
     "extra": {
       "eas": {
