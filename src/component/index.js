@@ -14,6 +14,7 @@ import TableLoanList from "./TableLoanList"
 import UploadLabel from "./UploadLabel"
 import AppPdfPicker from "./AppPdfPicker"
 import StepBar from "./StepBar"
+import WantSwitch from "./WantSwitch"
 
 export {
     AppView,
@@ -32,4 +33,5 @@ export {
     UploadLabel,
     AppPdfPicker,
     StepBar,
+    WantSwitch,
 }

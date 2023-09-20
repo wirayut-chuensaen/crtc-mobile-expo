@@ -37,6 +37,12 @@ import FormCoopDeposit from './page/CoopDeposit/FormCoopDeposit';
 import CoopDepositSuccess from './page/CoopDeposit/CoopDepositSuccess';
 import CoopDepositConfirm from './page/CoopDeposit/CoopDepositConfirm';
 import CoopOtp from './page/CoopOtp';
+import FormCoopLoan from './page/CoopLoan/FormCoopLoan';
+import CoopLoanConfirm from './page/CoopLoan/CoopLoanConfirm';
+import CoopLoanSuccess from './page/CoopLoan/CoopLoanSuccess';
+import FormCoopWithdraw from './page/CoopWithdraw/FormCoopWithdraw';
+import CoopWithdrawConfirm from './page/CoopWithdraw/CoopWithdrawConfirm';
+import CoopWithdrawSuccess from './page/CoopWithdraw/CoopWithdrawSuccess';
 
 // import News from '../page/News';
 // import NewsDetail from '../detail/NewsDetail';
@@ -65,12 +71,7 @@ import CoopOtp from './page/CoopOtp';
 // import FormChangeLoan from '../page/FormChangeLoan';
 
 // import FormUploadDocument from '../page/Loan/FormUploadDocument';
-// import FormCoopLoan from '../page/CoopLoan/FormCoopLoan';
-// import CoopLoanConfirm from '../page/CoopLoan/CoopLoanConfirm';
-// import CoopLoanSuccess from '../page/CoopLoan/CoopLoanSuccess';
-// import FormCoopWithdraw from '../page/CoopWithdraw/FormCoopWithdraw';
-// import CoopWithdrawConfirm from '../page/CoopWithdraw/CoopWithdrawConfirm';
-// import CoopWithdrawSuccess from '../page/CoopWithdraw/CoopWithdrawSuccess';
+
 // import LoanCalculate from '../page/Loan/LoanCalculate';
 
 // import CoopLinkAccount from '../page/CoopLinkAccount';
@@ -124,6 +125,12 @@ const Routes = () => {
         <Stack.Screen name="CoopDepositConfirm" component={CoopDepositConfirm} />
         <Stack.Screen name="CoopOtp" component={CoopOtp} />
         <Stack.Screen name="CoopDepositSuccess" component={CoopDepositSuccess} />
+        <Stack.Screen name="FormCoopLoan" component={FormCoopLoan} />
+        <Stack.Screen name="CoopLoanConfirm" component={CoopLoanConfirm} />
+        <Stack.Screen name="CoopLoanSuccess" component={CoopLoanSuccess} />
+        <Stack.Screen name="FormCoopWithdraw" component={FormCoopWithdraw} />
+        <Stack.Screen name="CoopWithdrawConfirm" component={CoopWithdrawConfirm} />
+        <Stack.Screen name="CoopWithdrawSuccess" component={CoopWithdrawSuccess} />
 
         {/*
         
@@ -164,20 +171,6 @@ const Routes = () => {
           name="FormUploadDocument"
           component={FormUploadDocument}
         />
-
-        <Stack.Screen name="FormCoopWithdraw" component={FormCoopWithdraw} />
-        <Stack.Screen
-          name="CoopWithdrawConfirm"
-          component={CoopWithdrawConfirm}
-        />
-        <Stack.Screen
-          name="CoopWithdrawSuccess"
-          component={CoopWithdrawSuccess}
-        />
-
-        <Stack.Screen name="FormCoopLoan" component={FormCoopLoan} />
-        <Stack.Screen name="CoopLoanConfirm" component={CoopLoanConfirm} />
-        <Stack.Screen name="CoopLoanSuccess" component={CoopLoanSuccess} />
 
         <Stack.Screen name="LoanCalculate" component={LoanCalculate} />
       
