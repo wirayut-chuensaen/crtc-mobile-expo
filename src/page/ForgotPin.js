@@ -63,10 +63,10 @@ const ForgotPin = ({ navigation, Actions, mode }) => {
 		try {
 			setIsLoading(true)
 			await loginWithPin({ user_pin: pin }, async (res, done) => {
-				if (done && res.data.status) {
+				if (done && res?.data?.status) {
 					await AsyncStorage.multiSet([
 						['pin', `${pin}`],
-						['pinPhone', `${res.data.data.mobile_phone}`],
+						['pinPhone', `${res?.data?.data?.mobile_phone}`],
 						['pinDate', `${new Date().getTime()}`],
 					]).then(() => {
 						Actions.push('NewPinOTP');
@@ -76,9 +76,9 @@ const ForgotPin = ({ navigation, Actions, mode }) => {
 					Alert.alert('', 'Pin ไม่ถูกต้อง');
 				}
 			});
-			setIsLoading(false)
 		} catch (e) {
 			console.log("ForgotPin.js loginWithPinData error : ", e)
+		} finally {
 			setIsLoading(false)
 		}
 	};

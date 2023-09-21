@@ -13,6 +13,7 @@ import ItemWarranteeWho from "./ItemWarranteeWho"
 import ItemCooperative from "./ItemCooperative"
 import ItemStock from "./ItemStock"
 import ItemDividend from "./ItemDividend"
+import ItemTransferHistory from "./ItemTransferHistory"
 
 export {
     ItemAccount,
@@ -30,4 +31,5 @@ export {
     ItemCooperative,
     ItemStock,
     ItemDividend,
+    ItemTransferHistory,
 }

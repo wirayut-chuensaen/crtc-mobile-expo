@@ -147,9 +147,7 @@ const Home = ({ navigation, route, onLoadingChange }) => {
 			await account((res, done) => {
 				// console.log('account res : ', res)
 				if (done && res?.data?.status) {
-					onLoadingChange(true)
 					checkCondition((res, done) => {
-						onLoadingChange(false)
 						if (done && res?.data?.status) {
 							onLoadingChange(false)
 						} else {

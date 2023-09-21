@@ -21,8 +21,12 @@ const Account = ({ navigation, route }) => {
 		};
 	}, []);
 
-	const initialData = async () => {
-		setIsLoading(true)
+	const initialData = async (isRefresh = false) => {
+		if (!isRefresh) {
+			setIsLoading(true)
+		} else {
+			setRefreshing(true)
+		}
 		try {
 			let hasCache = false;
 			const cacheAccountList = await DataPersistant.getItem(
@@ -34,7 +38,6 @@ const Account = ({ navigation, route }) => {
 				setAccountList(cacheAccountList);
 			}
 			await account((res, done) => {
-				setRefreshing(false);
 				// console.log("account res : ", res);
 				if (done && res?.data?.status) {
 					const { accounts } = res?.data?.data;
@@ -50,6 +53,7 @@ const Account = ({ navigation, route }) => {
 			console.log("Account.js initialData error : ", e)
 		} finally {
 			setIsLoading(false)
+			setRefreshing(false)
 		}
 	};
 
@@ -118,11 +122,6 @@ const Account = ({ navigation, route }) => {
 		);
 	};
 
-	const onRefresh = () => {
-		setRefreshing(true);
-		initialData();
-	};
-
 	return (
 		<AppView isLoading={isLoading} style={{ flex: 1, backgroundColor: '#efefef' }}>
 			<Header
@@ -141,7 +140,7 @@ const Account = ({ navigation, route }) => {
 				ListFooterComponent={() => <View style={{ height: 20 }} />}
 				renderItem={_renderItem}
 				refreshControl={
-					<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+					<RefreshControl refreshing={refreshing} onRefresh={() => initialData(true)} />
 				}
 			/>
 		</AppView>

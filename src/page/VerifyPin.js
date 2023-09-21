@@ -100,7 +100,7 @@ const VerifyPin = ({
 		try {
 			setIsLoading(true)
 			await loginWithPin({ user_pin: pin }, async (res, done) => {
-				if (done && res.data.status) {
+				if (done && res?.data?.status) {
 					await AsyncStorage.multiSet([
 						['pin', `${pin}`],
 						['pinPhone', `${res?.data?.data?.mobile_phone}`],

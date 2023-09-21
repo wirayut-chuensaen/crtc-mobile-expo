@@ -43,6 +43,11 @@ import CoopLoanSuccess from './page/CoopLoan/CoopLoanSuccess';
 import FormCoopWithdraw from './page/CoopWithdraw/FormCoopWithdraw';
 import CoopWithdrawConfirm from './page/CoopWithdraw/CoopWithdrawConfirm';
 import CoopWithdrawSuccess from './page/CoopWithdraw/CoopWithdrawSuccess';
+import AccountDetail from './page/AccountDetail';
+import TransferAction from './page/TransferAction';
+import TransferConfirm from './page/TransferConfirm';
+import VerifyOTP from './page/VerifyOTP';
+import TransferSuccess from './page/TransferSuccess';
 
 // import News from '../page/News';
 // import NewsDetail from '../detail/NewsDetail';
@@ -59,11 +64,6 @@ import CoopWithdrawSuccess from './page/CoopWithdraw/CoopWithdrawSuccess';
 // import WarranteeWho_Detail from '../detail/WarranteeWho_Detail';  //<-- old
 
 // import AddAccount from '../page/AddAccount';
-// import AccountDetail from '../page/AccountDetail';
-// import TransferAction from '../page/TransferAction';
-// import TransferConfirm from '../page/TransferConfirm';
-// import VerifyOTP from '../page/VerifyOTP';
-// import TransferSuccess from '../page/TransferSuccess';
 
 // import NewPinDataVerify from '../page/NewPinDataVerify';
 
@@ -131,6 +131,11 @@ const Routes = () => {
         <Stack.Screen name="FormCoopWithdraw" component={FormCoopWithdraw} />
         <Stack.Screen name="CoopWithdrawConfirm" component={CoopWithdrawConfirm} />
         <Stack.Screen name="CoopWithdrawSuccess" component={CoopWithdrawSuccess} />
+        <Stack.Screen name="AccountDetail" component={AccountDetail} />
+        <Stack.Screen name="TransferAction" component={TransferAction} />
+        <Stack.Screen name="TransferConfirm" component={TransferConfirm} />
+        <Stack.Screen name="VerifyOTP" component={VerifyOTP} />
+        <Stack.Screen name="TransferSuccess" component={TransferSuccess} />
 
         {/*
         
@@ -155,11 +160,6 @@ const Routes = () => {
         />
        
         <Stack.Screen name="AddAccount" component={AddAccount} />
-        <Stack.Screen name="AccountDetail" component={AccountDetail} />
-        <Stack.Screen name="TransferAction" component={TransferAction} />
-        <Stack.Screen name="TransferConfirm" component={TransferConfirm} />
-        <Stack.Screen name="VerifyOTP" component={VerifyOTP} />
-        <Stack.Screen name="TransferSuccess" component={TransferSuccess} />
         
         <Stack.Screen name="NewPinOTP" component={NewPinOTP} />
         <Stack.Screen name="NewPinDataVerify" component={NewPinDataVerify} />

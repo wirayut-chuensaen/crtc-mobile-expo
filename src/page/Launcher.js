@@ -74,7 +74,6 @@ const Launcher = ({ navigation, route, Actions, tab }) => {
 		if (tabState !== Tab.ACCOUNT) Actions.push('VerifyPin');
 	};
 
-
 	return (
 		<AppView isLoading={isLoading} style={styles.container}>
 			<View style={styles.body}>
