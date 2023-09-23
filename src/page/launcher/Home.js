@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import {
 	StyleSheet,
 	Dimensions,
@@ -16,6 +16,7 @@ import { Tab } from '../Launcher';
 import * as Application from 'expo-application';
 import Constant from "../../utils/Constant"
 import showError from '../../utils/showError';
+import { AppContext } from '../../context';
 
 const width = Dimensions.get('window').width;
 
@@ -82,6 +83,7 @@ const menuList = [
 
 const Home = ({ navigation, route, onLoadingChange }) => {
 	const [slider, setSlider] = useState([]);
+	const { isInitialHome, setIsInitialHome } = useContext(AppContext)
 
 	useEffect(() => {
 		onLoadData();
@@ -171,8 +173,10 @@ const Home = ({ navigation, route, onLoadingChange }) => {
 
 	const onLoadData = async () => {
 		try {
-			onLoadingChange(true)
-			home(async (res, done) => {
+			if (!isInitialHome || isInitialHome == false || isInitialHome == null) {
+				onLoadingChange(true)
+			}
+			await home(async (res, done) => {
 				if (res.data.status === true || !done) {
 					setSlider(res?.data?.data?.slider);
 					checkVerifyPin();
@@ -187,6 +191,7 @@ const Home = ({ navigation, route, onLoadingChange }) => {
 			console.log("Home.js onLoadData error : ", e)
 		} finally {
 			onLoadingChange(false)
+			setIsInitialHome(true)
 		}
 	};
 

@@ -15,7 +15,7 @@ import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons"
 import * as ExpoLinking from "expo-linking"
 import { useFocusEffect } from '@react-navigation/native';
 
-const CoopAccountNotLink = ({ navigation, Actions, refresh, url }) => {
+const CoopAccountNotLink = ({ navigation, Actions, url }) => {
 	useFocusEffect(
 		useCallback(() => {
 			const backHandler = BackHandler.addEventListener(

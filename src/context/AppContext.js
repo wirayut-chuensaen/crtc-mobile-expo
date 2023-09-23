@@ -9,6 +9,7 @@ export const AppProvider = ({ children }) => {
 	const [userPin, setUserPin] = useState("")
 	const [userPinPhone, setUserPinPhone] = useState("")
 	const [userPinDate, setUserPinDate] = useState("")
+	const [isInitialHome, setIsInitialHome] = useState(false)
 
 	// excute function when app start
 	useEffect(() => {
@@ -36,6 +37,7 @@ export const AppProvider = ({ children }) => {
 				userPin, setUserPin,
 				userPinPhone, setUserPinPhone,
 				userPinDate, setUserPinDate,
+				isInitialHome, setIsInitialHome,
 			}}
 		>
 			{children}

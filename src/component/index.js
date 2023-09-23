@@ -15,6 +15,7 @@ import UploadLabel from "./UploadLabel"
 import AppPdfPicker from "./AppPdfPicker"
 import StepBar from "./StepBar"
 import WantSwitch from "./WantSwitch"
+import TableSavemasList from "./TableSavemasList"
 
 export {
     AppView,
@@ -34,4 +35,5 @@ export {
     AppPdfPicker,
     StepBar,
     WantSwitch,
+    TableSavemasList,
 }

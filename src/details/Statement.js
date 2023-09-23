@@ -1,212 +1,176 @@
-import React, {Component} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
-  StyleSheet,
-  Dimensions,
-  View,
-  Image,
-  FlatList,
-  Linking,
+	StyleSheet,
+	Dimensions,
+	View,
+	Image,
+	FlatList,
 } from 'react-native';
-import {Icon, Header} from 'react-native-elements';
-import Constant from '../util/Constant';
-
-import LinearGradient from 'react-native-linear-gradient';
-import RowInfo from '../item/RowInfo';
-import {statement} from '../../actions/Service';
-import ItemStatement from '../item/ItemStatement';
-import {Dialog} from 'react-native-simple-dialogs';
+import * as ExpoLinking from "expo-linking"
+import { Icon, Header, Dialog } from 'react-native-elements';
+import Constant from '../utils/Constant';
+import { LinearGradient } from 'expo-linear-gradient';
+import { AppView } from '../component';
+import { RowInfo, ItemStatement } from '../items';
+import { statement } from "../service/Services"
+import useNavigator from '../utils/useNavigator';
 
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
 
-export default class Statement extends Component {
-  state = {
-    dialogVisible: false,
-    title: 'รายการเดินบัญชี',
-    item: [],
-    refreshing: false,
-    image: '',
-  };
+const Statement = ({ navigation, Actions, accno }) => {
+	const [isLoading, setIsLoading] = useState(false)
+	// const [dialogVisible, setDialogVisible] = useState(false)
+	const [item, setItem] = useState([])
+	const [refreshing, setRefreshing] = useState(false)
+	const [image, setImage] = useState("")
 
-  componentDidMount() {
-    var id = this.props.route.params.accno;
+	useEffect(() => {
+		init()
+	}, [])
 
-    statement(id, (res, err) => {
-      if (res.data.status == true) {
-        this.setState({
-          item: res.data.data.savemas_statements,
-        });
-        this.setState({
-          image: res.data.data.loan_statment[0].image,
-        });
-      } else {
-      }
-    });
-    // this.onLoadData()
-  }
+	const init = async (isRefresh = false) => {
+		try {
+			if (!isRefresh) {
+				setIsLoading(true)
+			} else {
+				setRefreshing(true)
+			}
+			await statement(accno, (res, err) => {
+				if (res?.data?.status == true) {
+					setItem(res?.data?.data?.savemas_statements)
+					setImage(res?.data?.data?.loan_statment[0]?.image)
+				} else {
+				}
+			});
+		} catch (e) {
+			console.log("Statement.js init error : ", e)
+		} finally {
+			setIsLoading(false)
+			setRefreshing(false)
+		}
+	}
 
-  componentWillUnmount() {}
+	const onOpenUrl = () => {
+		if (item.length > 0) {
+			ExpoLinking.openURL(item[0]?.image).catch((err) =>
+				alert('link : ' + item[0]?.image),
+			);
+		}
+	};
 
-  _handleRefresh = () => {
-    this.setState({
-      refreshing: true,
-    });
-    var id = this.props.route.params.accno;
-    statement(id, (res, err) => {
-      if (res.data.status == true) {
-        this.setState({
-          refreshing: false,
-          item: res.data.data.savemas_statements,
-        });
-      } else {
-        this.setState({
-          refreshing: false,
-        });
-      }
-    });
-  };
+	return (
+		<AppView isLoading={isLoading} style={styles.container}>
+			<Header
+				leftComponent={
+					<Icon
+						name="chevron-thin-left"
+						type="entypo"
+						color="#fff"
+						iconStyle={{ backgroundColor: Constant?.color?.violet }}
+						onPress={() => Actions.pop()}
+					/>
+				}
+				centerComponent={{ text: "รายการเดินบัญชี", style: { color: '#fff' } }}
+				innerContainerStyles={{ backgroundColor: Constant?.color?.violet }}
+				containerStyle={{
+					backgroundColor: Constant?.color?.violet,
+					borderBottomColor: Constant?.color?.violet,
+				}}
+				rightComponent={
+					<Icon
+						name="infocirlceo"
+						type="antdesign"
+						color="#fff"
+						iconStyle={{ backgroundColor: Constant?.color?.violet }}
+						onPress={() => onOpenUrl()}
+					/>
+				}
+			/>
 
-  onOpenUrl = () => {
-    if (this.state.item.length > 0) {
-      Linking.openURL(this.state.item[0].image).catch((err) =>
-        alert('link : ' + this.state.item[0].image),
-      );
-    }
-  };
+			<View style={styles.body}>
+				<LinearGradient
+					locations={[0, 0.4]}
+					colors={[Constant?.color?.violetlight, Constant?.color?.darkPurple]}
+					start={{ x: 0, y: 0 }}
+					end={{ x: 0, y: 1 }}
+					style={styles.linearGradient}>
+					<View style={styles.content}>
+						<RowInfo keys="รายการเดินบัญชี" name="" />
+						<FlatList
+							itemDimension={width - 20}
+							data={item}
+							numColumns={1}
+							keyExtractor={(data, index) => `item_${index}`}
+							refreshing={refreshing}
+							onRefresh={() => init(true)}
+							renderItem={({ item, index }) => (
+								<ItemStatement {...item} />
+							)}
+						/>
+					</View>
+				</LinearGradient>
+			</View>
+			{/* <Dialog
+				visible={this.state.dialogVisible}
+				animationType="fade"
+				dialogStyle={{
+					alignItems: 'center',
+					justifyContent: 'center',
+					backgroundColor: Constant.color.transparent,
+				}}
+				contentStyle={{
+					alignItems: 'center',
+					justifyContent: 'center',
+					backgroundColor: Constant.color.transparent,
+				}}
+				onTouchOutside={() => this.setState({ dialogVisible: false })}>
+				<View>
+					<Image
+						source={{
+							uri: 'https://dev.crtc-service.com/images/saving-code19.jpg',
+						}}
+						style={{
+							width: width,
+							height: (width - 40) / 1.5,
 
-  render() {
-    return (
-      <View style={styles.container}>
-        <Header
-          leftComponent={
-            <Icon
-              name="chevron-thin-left"
-              type="entypo"
-              color="#fff"
-              iconStyle={{backgroundColor: Constant.color.violet}}
-              onPress={() => this.props.navigation.goBack()}
-            />
-          }
-          centerComponent={{text: this.state.title, style: {color: '#fff'}}}
-          innerContainerStyles={{backgroundColor: Constant.color.violet}}
-          containerStyle={{
-            backgroundColor: Constant.color.violet,
-            borderBottomColor: Constant.color.violet,
-          }}
-          rightComponent={
-            <Icon
-              name="infocirlceo"
-              type="antdesign"
-              color="#fff"
-              iconStyle={{backgroundColor: Constant.color.violet}}
-              onPress={() => this.onOpenUrl()}
-            />
-          }
-          // rightComponent={<Icon name='person' color='#fff' iconStyle={{backgroundColor:Constant.color.violet}}  />}
-        />
-
-        <View style={styles.body}>
-          <LinearGradient
-            locations={[0, 0.4]}
-            colors={[Constant.color.violetlight, Constant.color.darkPurple]}
-            start={{x: 0, y: 0}}
-            end={{x: 0, y: 1}}
-            style={styles.linearGradient}>
-            <View style={styles.content}>
-              <RowInfo keys="รายการเดินบัญชี" name="" />
-
-              <FlatList
-                itemDimension={width - 20}
-                data={this.state.item}
-                style={styles.gridView}
-                numColumns={1}
-                keyExtractor={(item) => item.id}
-                // ItemSeparatorComponent={() => <Divider style={{ marginTop: 5, marginLeft: width * 0.2 + 20 }} parentStyle={{ backgroundColor: globalStyles.BG_COLOR, alignItems: 'baseline' }} />}
-                refreshing={this.state.refreshing}
-                onRefresh={this._handleRefresh}
-                renderItem={({item, index}) => (
-                  // <TouchableOpacity onPress={() =>  this.props.navigation.navigate('',{item})}>
-                  <ItemStatement {...item} />
-                  // </TouchableOpacity>
-                )}
-              />
-            </View>
-          </LinearGradient>
-        </View>
-        <Dialog
-          visible={this.state.dialogVisible}
-          animationType="fade"
-          dialogStyle={{
-            alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: Constant.color.transparent,
-          }}
-          contentStyle={{
-            alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: Constant.color.transparent,
-          }}
-          onTouchOutside={() => this.setState({dialogVisible: false})}>
-          <View>
-            <Image
-              source={{
-                uri: 'https://dev.crtc-service.com/images/saving-code19.jpg',
-              }}
-              style={{
-                width: width,
-                height: (width - 40) / 1.5,
-
-                // backgroundColor: "black",
-                // marginTop: 10,
-                resizeMode: 'contain',
-              }}
-            />
-          </View>
-        </Dialog>
-      </View>
-    );
-  }
+							// backgroundColor: "black",
+							// marginTop: 10,
+							resizeMode: 'contain',
+						}}
+					/>
+				</View>
+			</Dialog> */}
+		</AppView>
+	);
 }
 
+export default useNavigator(Statement)
+
 const styles = StyleSheet.create({
-  content: {
-    flex: 1,
-    flexDirection: 'column',
-    marginTop: 15,
-    backgroundColor: Constant.color.white,
-    borderRadius: 5,
-    borderWidth: 1,
-    borderColor: Constant.color.gray,
-  },
-
-  contents: {
-    flexDirection: 'column',
-    marginTop: 15,
-    backgroundColor: Constant.color.white,
-    borderRadius: 5,
-    borderWidth: 1,
-    borderColor: Constant.color.gray,
-  },
-
-  body: {
-    height: height - 80,
-  },
-
-  wapper_content: {
-    flex: 1,
-  },
-  linearGradient: {
-    flex: 1,
-    paddingLeft: 15,
-    paddingRight: 15,
-  },
-  Button: {
-    margin: 10,
-    marginBottom: 15,
-    marginTop: 15,
-    backgroundColor: Constant.color.violetlight,
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: Constant.color.white,
-  },
+	content: {
+		flex: 1,
+		flexDirection: 'column',
+		marginTop: 15,
+		backgroundColor: Constant?.color?.white,
+		borderRadius: 5,
+		borderWidth: 1,
+		borderColor: Constant?.color?.gray,
+	},
+	contents: {
+		flexDirection: 'column',
+		marginTop: 15,
+		backgroundColor: Constant?.color?.white,
+		borderRadius: 5,
+		borderWidth: 1,
+		borderColor: Constant?.color?.gray,
+	},
+	body: {
+		height: height - 80,
+	},
+	linearGradient: {
+		flex: 1,
+		paddingLeft: 15,
+		paddingRight: 15,
+	},
 });

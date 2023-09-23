@@ -8,8 +8,10 @@ import Launcher from './page/Launcher';
 import TermAndCondition from './page/TermAndCondition';
 import VerifyPin from './page/VerifyPin';
 import Settings from './page/Settings';
+import CoopAccountNotLink from './page/CoopAccountNotLink';
 import ForgotPin from './page/ForgotPin';
 import NewPinOTP from './page/NewPinOTP';
+import NewPinDataVerify from './page/NewPinDataVerify';
 import Contact from "./details/Contact"
 import Notifications from './details/Notifications';
 import PrivacyPolicy from './details/PrivacyPolicy';
@@ -48,34 +50,21 @@ import TransferAction from './page/TransferAction';
 import TransferConfirm from './page/TransferConfirm';
 import VerifyOTP from './page/VerifyOTP';
 import TransferSuccess from './page/TransferSuccess';
+import Deposits from './page/Deposits';
+import Savemas_Detail from './details/Savemas_Detail';
+import Statement from './details/Statement';
+import FormChangeDeposit from './page/FormChangeDeposit';
+import Loans from './page/Loans';
+import Loan_Detail from './details/Loan_Detail';
+import Loan_Statement from './details/Loan_Statement';
+import FormChangeLoan from './page/FormChangeLoan';
 
 // import News from '../page/News';
 // import NewsDetail from '../detail/NewsDetail';
-
-// import Deposits from '../page/Deposits';
-// import Savemas_Detail from '../detail/Savemas_Detail';
-// import Statement from '../detail/Statement';
-
-// import Loans from '../page/Loans';
-// import Loan_Detail from '../detail/Loan_Detail';
-// import Loan_Statement from '../detail/Loan_Statement';
-
-// import WarranteeMe_Detail from '../detail/WarranteeMe_Detail';  //<-- old
-// import WarranteeWho_Detail from '../detail/WarranteeWho_Detail';  //<-- old
-
 // import AddAccount from '../page/AddAccount';
-
-// import NewPinDataVerify from '../page/NewPinDataVerify';
-
-// import FormChangeDeposit from '../page/FormChangeDeposit';
-// import FormChangeLoan from '../page/FormChangeLoan';
-
 // import FormUploadDocument from '../page/Loan/FormUploadDocument';
-
 // import LoanCalculate from '../page/Loan/LoanCalculate';
-
 // import CoopLinkAccount from '../page/CoopLinkAccount';
-// import CoopAccountNotLink from '../page/CoopAccountNotLink';
 
 const Stack = createNativeStackNavigator();
 
@@ -96,8 +85,10 @@ const Routes = () => {
         <Stack.Screen name="Launcher" component={Launcher} />
         <Stack.Screen name="TermAndCondition" component={TermAndCondition} />
         <Stack.Screen name="Settings" component={Settings} />
+        <Stack.Screen name="CoopAccountNotLink" component={CoopAccountNotLink} />
         <Stack.Screen name="ForgotPin" component={ForgotPin} />
         <Stack.Screen name="NewPinOTP" component={NewPinOTP} />
+        <Stack.Screen name="NewPinDataVerify" component={NewPinDataVerify} />
         <Stack.Screen name="Contact" component={Contact} />
         <Stack.Screen name="Notifications" component={Notifications} />
         <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
@@ -136,46 +127,26 @@ const Routes = () => {
         <Stack.Screen name="TransferConfirm" component={TransferConfirm} />
         <Stack.Screen name="VerifyOTP" component={VerifyOTP} />
         <Stack.Screen name="TransferSuccess" component={TransferSuccess} />
+        <Stack.Screen name="Deposits" component={Deposits} />
+        <Stack.Screen name="Savemas_Detail" component={Savemas_Detail} />
+        <Stack.Screen name="Statement" component={Statement} />
+        <Stack.Screen name="FormChangeDeposit" component={FormChangeDeposit} />
+        <Stack.Screen name="Loans" component={Loans} />
+        <Stack.Screen name="Loan_Detail" component={Loan_Detail} />
+        <Stack.Screen name="Loan_Statement" component={Loan_Statement} />
+        <Stack.Screen name="FormChangeLoan" component={FormChangeLoan} />
 
         {/*
         
         <Stack.Screen name="News" component={News} />
         <Stack.Screen name="NewsDetail" component={NewsDetail} />
-
-        <Stack.Screen name="Deposits" component={Deposits} />
-        <Stack.Screen name="Savemas_Detail" component={Savemas_Detail} />
-        <Stack.Screen name="Statement" component={Statement} />
-
-        <Stack.Screen name="Loans" component={Loans} />
-        <Stack.Screen name="Loan_Detail" component={Loan_Detail} />
-        <Stack.Screen name="Loan_Statement" component={Loan_Statement} />
-        
-        <Stack.Screen
-          name="WarranteeMe_Detail"
-          component={WarranteeMe_Detail} //<-- old
-        />
-        <Stack.Screen
-          name="WarranteeWho_Detail"
-          component={WarranteeWho_Detail}  //<-- old
-        />
-       
-        <Stack.Screen name="AddAccount" component={AddAccount} />
-        
-        <Stack.Screen name="NewPinOTP" component={NewPinOTP} />
-        <Stack.Screen name="NewPinDataVerify" component={NewPinDataVerify} />
-       
-        <Stack.Screen name="FormChangeDeposit" component={FormChangeDeposit} />
-        <Stack.Screen name="FormChangeLoan" component={FormChangeLoan} />
-
+        <Stack.Screen name="AddAccount" component={AddAccount} />  
         <Stack.Screen
           name="FormUploadDocument"
           component={FormUploadDocument}
         />
-
         <Stack.Screen name="LoanCalculate" component={LoanCalculate} />
-      
         <Stack.Screen name="CoopLinkAccount" component={CoopLinkAccount} />
-        <Stack.Screen name="CoopAccountNotLink" component={CoopAccountNotLink} />
 
          */}
       </Stack.Navigator>
